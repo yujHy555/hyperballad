@@ -239,7 +239,7 @@ export const PerformanceSection: React.FC = () => {
 
             {/* Press snippet */}
             <div className="p-3.5 rounded-xl border border-[#D50032]/30 bg-[#FFB3BA]/20 text-xs text-[#A50034] font-normal italic flex items-center justify-between">
-              <span>"Fluid, mathematical time with the brush finesse of Paul Motian and the kinetic authority of Tony Williams."</span>
+              <span>"Fluid, intricate pattern time with the brush finesse of Paul Motian and the kinetic authority of Tony Williams."</span>
               <span className="text-[10px] font-mono not-italic text-[#7A6E74] uppercase ml-2">— London Jazz Review</span>
             </div>
           </div>

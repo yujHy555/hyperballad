@@ -21,10 +21,8 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const cymbalMeshesRef = useRef<THREE.Mesh[]>([]);
+  const fineLineGeometricMeshesRef = useRef<THREE.Group[]>([]);
   const phyllotaxisPointsRef = useRef<THREE.Points | null>(null);
-  const geometricRingsRef = useRef<THREE.Group[]>([]);
-  const sacredPolyhedraRef = useRef<THREE.LineSegments[]>([]);
   const animFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -67,100 +65,106 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     const ambientLight = new THREE.AmbientLight(0xfff7f8, 2.6);
     scene.add(ambientLight);
 
-    // Key Light: Crimson Ruby (#D50032)
-    const crimsonKeyLight = new THREE.DirectionalLight(0xd50032, 2.8);
+    const crimsonKeyLight = new THREE.DirectionalLight(0xd50032, 2.4);
     crimsonKeyLight.position.set(220, 320, 420);
     scene.add(crimsonKeyLight);
 
-    // Fill Light: Petal Blossom Pink (#FFB3BA)
     const blossomFillLight = new THREE.DirectionalLight(0xffb3ba, 2.0);
     blossomFillLight.position.set(-200, -120, -180);
     scene.add(blossomFillLight);
 
-    // Specular Rim: Soft Alabaster White
-    const whiteRimLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    whiteRimLight.position.set(0, 400, -200);
-    scene.add(whiteRimLight);
-
-    // 5. Dynamic 3D Objects: Resonant Bronze Cymbals + Sacred Golden Ratio Geometry across 5 sections
-    const cymbalGeo = new THREE.CylinderGeometry(85, 95, 2.5, 52);
-    const bellGeo = new THREE.SphereGeometry(22, 28, 18, 0, Math.PI * 2, 0, Math.PI * 0.45);
-
-    // Cymbal Material with Rose-Wine Specular Luster
-    const cymbalMat = new THREE.MeshStandardMaterial({
-      color: 0xdfa16a,
-      metalness: 0.94,
-      roughness: 0.22,
-      emissive: 0x3d0714,
-      emissiveIntensity: 0.2
-    });
-
-    const cymbals: THREE.Mesh[] = [];
+    // 5. Fine Line Style Geometric Wireframes & Sacred Pattern Curves (Zero solid discs/cymbals)
+    const geometricGroups: THREE.Group[] = [];
     const sectionSpans = [0, 800, 1600, 2400, 3200];
     const PHI = 1.6180339887; // The Golden Ratio
 
     sectionSpans.forEach((xPos, idx) => {
       const group = new THREE.Group();
 
-      // Cymbal Disc
-      const cymbal = new THREE.Mesh(cymbalGeo, cymbalMat);
-      cymbal.rotation.x = Math.PI / 2.3 + (idx % 2 === 0 ? 0.18 : -0.18);
-      cymbal.rotation.y = idx * 0.45;
-      group.add(cymbal);
+      // (A) Concentric Fine-Line Orbital Circles
+      const radii = [45, 45 * PHI, 45 * PHI * PHI];
+      const lineColors = [0xd50032, 0xffb3ba, 0xa50034];
 
-      // Cymbal Bell (Nautilus proportion)
-      const bell = new THREE.Mesh(bellGeo, cymbalMat);
-      bell.position.y = 2.5;
-      bell.rotation.x = -Math.PI / 2;
-      group.add(bell);
+      radii.forEach((r, rIdx) => {
+        const segments = 96;
+        const circlePoints: THREE.Vector3[] = [];
+        for (let i = 0; i <= segments; i++) {
+          const theta = (i / segments) * Math.PI * 2;
+          circlePoints.push(new THREE.Vector3(Math.cos(theta) * r, Math.sin(theta) * r, 0));
+        }
+        const circleGeo = new THREE.BufferGeometry().setFromPoints(circlePoints);
+        const circleMat = new THREE.LineBasicMaterial({
+          color: lineColors[rIdx],
+          transparent: true,
+          opacity: 0.45 - rIdx * 0.1,
+          linewidth: 1
+        });
+        const line = new THREE.LineLoop(circleGeo, circleMat);
+        line.rotation.x = Math.PI / 2.2 + (rIdx * 0.1);
+        group.add(line);
+      });
 
-      const zDepths = [-160, 45, -110, 95, -45];
-      const yOffsets = [-35, 75, -80, 55, -25];
+      // (B) Fine-Line Sacred Geometry Polytope Wireframe (Icosahedron / Octahedron lines)
+      const icosaGeo = new THREE.IcosahedronGeometry(55 + (idx % 2) * 15, 0);
+      const icosaEdges = new THREE.EdgesGeometry(icosaGeo);
+      const wireMat = new THREE.LineBasicMaterial({
+        color: idx % 2 === 0 ? 0xd50032 : 0xa50034,
+        transparent: true,
+        opacity: 0.35,
+        linewidth: 1
+      });
+      const polyLine = new THREE.LineSegments(icosaEdges, wireMat);
+      group.add(polyLine);
+
+      // (C) Nested Inner Octahedron Fine Wireframe
+      const octaGeo = new THREE.OctahedronGeometry(28, 0);
+      const octaEdges = new THREE.EdgesGeometry(octaGeo);
+      const octaMat = new THREE.LineBasicMaterial({
+        color: 0xffb3ba,
+        transparent: true,
+        opacity: 0.5,
+        linewidth: 1
+      });
+      const innerPoly = new THREE.LineSegments(octaEdges, octaMat);
+      group.add(innerPoly);
+
+      // (D) Delicate 3D Golden Ratio Spiral Line
+      const spiralPoints: THREE.Vector3[] = [];
+      const spiralSteps = 80;
+      for (let s = 0; s < spiralSteps; s++) {
+        const t = (s / spiralSteps) * (Math.PI * 4);
+        const radius = Math.pow(PHI, t / Math.PI) * 7.5;
+        spiralPoints.push(
+          new THREE.Vector3(
+            Math.cos(t) * radius,
+            Math.sin(t) * radius,
+            (s - spiralSteps / 2) * 0.8
+          )
+        );
+      }
+      const spiralGeo = new THREE.BufferGeometry().setFromPoints(spiralPoints);
+      const spiralMat = new THREE.LineBasicMaterial({
+        color: 0xd50032,
+        transparent: true,
+        opacity: 0.38,
+        linewidth: 1
+      });
+      const spiralLine = new THREE.Line(spiralGeo, spiralMat);
+      spiralLine.rotation.x = Math.PI / 2.4;
+      group.add(spiralLine);
+
+      const zDepths = [-140, 40, -100, 80, -35];
+      const yOffsets = [-25, 60, -65, 45, -15];
 
       group.position.set(xPos, yOffsets[idx], zDepths[idx]);
-      group.scale.setScalar(0.72 + (idx % 3) * 0.22);
+      group.scale.setScalar(0.75 + (idx % 3) * 0.18);
       scene.add(group);
-      cymbals.push(cymbal);
-
-      // Sacred Golden Ratio Concentric Rings
-      const ringGroup = new THREE.Group();
-      ringGroup.position.set(xPos, yOffsets[idx], zDepths[idx]);
-
-      const ringRadii = [80, 80 * PHI, 80 * PHI * PHI];
-      const ringColors = [0xd50032, 0xffb3ba, 0xa50034];
-
-      ringRadii.forEach((rad, rIdx) => {
-        const ringGeo = new THREE.RingGeometry(rad, rad + 1.8, 80);
-        const ringMat = new THREE.MeshBasicMaterial({
-          color: ringColors[rIdx],
-          transparent: true,
-          opacity: 0.32 - rIdx * 0.08,
-          side: THREE.DoubleSide
-        });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.rotation.x = Math.PI / 2.15;
-        ringGroup.add(ring);
-      });
-      scene.add(ringGroup);
-      geometricRingsRef.current.push(ringGroup);
-
-      // Sacred Geometry Polyhedron Wireframe (Dodecahedron - sacred symbol of the cosmos & harmony)
-      const dドウGeo = new THREE.IcosahedronGeometry(45 + (idx % 2) * 15, 0);
-      const wireframeGeo = new THREE.WireframeGeometry(dドウGeo);
-      const wireMat = new THREE.LineBasicMaterial({
-        color: idx % 2 === 0 ? 0xffb3ba : 0xd50032,
-        transparent: true,
-        opacity: 0.22
-      });
-      const polyLine = new THREE.LineSegments(wireframeGeo, wireMat);
-      polyLine.position.set(xPos, yOffsets[idx] + 70, zDepths[idx] - 60);
-      scene.add(polyLine);
-      sacredPolyhedraRef.current.push(polyLine);
+      geometricGroups.push(group);
     });
 
-    cymbalMeshesRef.current = cymbals;
+    fineLineGeometricMeshesRef.current = geometricGroups;
 
-    // 6. Generative Phyllotaxis Flower & Golden Spiral Spores (Geometry + Nature + Math)
+    // 6. Generative Phyllotaxis Flower & Golden Spiral Spores (Geometry + Nature + Patterns)
     // Formula: theta = n * 137.5077° (Golden Angle), r = c * sqrt(n)
     const particleCount = 750;
     const particleGeo = new THREE.BufferGeometry();
@@ -176,7 +180,6 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     const GOLDEN_ANGLE = 137.507764 * (Math.PI / 180); // ~2.39996 rad
 
     for (let i = 0; i < particleCount; i++) {
-      // Golden spiral distribution across horizontal sections
       const sectionOffset = (i / particleCount) * 3600 - 150;
       const angle = i * GOLDEN_ANGLE;
       const radius = Math.sqrt(i % 150) * 28;
@@ -185,7 +188,6 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       positions[i * 3 + 1] = Math.sin(angle) * radius + (Math.sin(i * 0.2) * 40);
       positions[i * 3 + 2] = Math.cos(angle * 1.618) * 400 + (Math.random() - 0.5) * 100;
 
-      // Color assignment from the user's signature palette
       const seed = i % 4;
       const col = seed === 0 ? c1 : seed === 1 ? c2 : seed === 2 ? c3 : c4;
       colors[i * 3] = col.r;
@@ -199,7 +201,6 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     particleGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     particleGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-    // Custom Botanical Particle Texture with soft Petal Gradient
     const pCanvas = document.createElement('canvas');
     pCanvas.width = 32;
     pCanvas.height = 32;
@@ -219,64 +220,30 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       vertexColors: true,
       map: pTexture,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.55,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
 
-    const phyllotaxisPoints = new THREE.Points(particleGeo, particleMat);
-    scene.add(phyllotaxisPoints);
-    phyllotaxisPointsRef.current = phyllotaxisPoints;
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
+    phyllotaxisPointsRef.current = particles;
 
-    // Handle Resize
-    const handleResize = () => {
-      if (!mountRef.current || !cameraRef.current || !rendererRef.current) return;
-      const w = mountRef.current.clientWidth;
-      const h = mountRef.current.clientHeight;
-      cameraRef.current.aspect = w / h;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(w, h);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-      renderer.dispose();
-      cymbalGeo.dispose();
-      bellGeo.dispose();
-      cymbalMat.dispose();
-      particleGeo.dispose();
-      particleMat.dispose();
-      pTexture.dispose();
-    };
-  }, []);
-
-  // Update dynamic camera FOV
-  useEffect(() => {
-    if (!cameraRef.current) return;
-    cameraRef.current.fov = cameraSettings.fov;
-    cameraRef.current.updateProjectionMatrix();
-  }, [cameraSettings.fov]);
-
-  // Main Render Loop
-  useEffect(() => {
+    // 7. Render Loop with Smooth Camera Motion
     let clock = new THREE.Clock();
 
     const animate = () => {
       animFrameRef.current = requestAnimationFrame(animate);
 
-      if (!cameraRef.current || !rendererRef.current || !sceneRef.current) return;
+      if (!cameraRef.current || !sceneRef.current || !rendererRef.current) return;
 
       const delta = clock.getDelta();
       const elapsedTime = clock.getElapsedTime();
 
-      // Horizontal tracking
-      const totalWorldX = 3200;
-      const targetCamX = scrollProgress * totalWorldX;
+      // Camera Horizontal Dolly based on Scroll
+      const trackLength = totalWidth - width;
+      const targetCamX = scrollProgress * (trackLength > 0 ? trackLength : 3200);
 
-      // Mouse Parallax Offset
       const mouseFactor = cameraSettings.mouseParallaxFactor * 60;
       const targetCamY = mousePos.y * mouseFactor;
       const mouseCamXOffset = mousePos.x * mouseFactor;
@@ -289,24 +256,16 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
 
       cameraRef.current.lookAt(cameraRef.current.position.x + 30, cameraRef.current.position.y * 0.3, 0);
 
-      // Rotate Cymbals with harmonic organic wobble
-      cymbalMeshesRef.current.forEach((cymbal, i) => {
-        const audioResonance = audioActive ? Math.sin(elapsedTime * 6 + i) * 0.04 : 0;
-        cymbal.rotation.y += (0.2 + i * 0.08 + (audioActive ? 0.3 : 0)) * delta;
-        cymbal.position.y = Math.sin(elapsedTime * 1.4 + i * 1.618) * 5 + audioResonance * 12;
-      });
+      // Rotate Fine-Line Geometric Wireframe Sculptures
+      fineLineGeometricMeshesRef.current.forEach((group, i) => {
+        const audioResonance = audioActive ? Math.sin(elapsedTime * 6 + i) * 0.05 : 0;
+        group.rotation.y += (0.18 + i * 0.06 + (audioActive ? 0.25 : 0)) * delta;
+        group.rotation.x += (0.08 + i * 0.04) * delta;
+        group.position.y = Math.sin(elapsedTime * 1.4 + i * 1.618) * 6 + audioResonance * 14;
 
-      // Sacred Geometry Concentric Rings: Golden Ratio Breathing
-      geometricRingsRef.current.forEach((ringGroup, i) => {
-        const breath = 1 + Math.sin(elapsedTime * 1.618 + i) * 0.04 + (audioActive ? 0.06 : 0);
-        ringGroup.scale.set(breath, breath, breath);
-        ringGroup.rotation.z += 0.05 * delta;
-      });
-
-      // Sacred Polyhedra Wireframe rotations
-      sacredPolyhedraRef.current.forEach((poly, i) => {
-        poly.rotation.x += (0.2 + i * 0.1) * delta;
-        poly.rotation.y += (0.15 + i * 0.05) * delta;
+        // Gentle breathing pulsation
+        const breath = 1 + Math.sin(elapsedTime * 1.618 + i) * 0.03 + (audioActive ? 0.05 : 0);
+        group.scale.set(breath, breath, breath);
       });
 
       // Phyllotaxis Flower Spiral: Natural organic wave drift

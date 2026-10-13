@@ -1,7 +1,7 @@
 import { ParallaxMediaItem } from '../types';
 
 export const INITIAL_PARALLAX_ITEMS: ParallaxMediaItem[] = [
-  // SECTION 0: HERO — Nature & Sacred Mathematics
+  // SECTION 0: HERO — Nature & Sacred Patterns
   {
     id: 'hero-back-fibonacci',
     type: 'html',

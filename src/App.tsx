@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { CameraSettings, ParallaxMediaItem, SectionInfo } from './types';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { CameraSettings, ParallaxMediaItem } from './types';
 import { INITIAL_PARALLAX_ITEMS } from './data/parallaxItems';
 import { jazzAudio } from './utils/audioEngine';
 
@@ -13,9 +13,9 @@ import { BeatConstructionSection } from './components/BeatConstructionSection';
 import { OutroSection } from './components/OutroSection';
 import { CameraControlsModal } from './components/CameraControlsModal';
 import { ParallaxMediaGuide } from './components/ParallaxMediaGuide';
-import { SECTIONS } from './data/sections';
+import { SECTIONS, MOBILE_SECTIONS } from './data/sections';
 
-import { Camera, Layers, Volume2, VolumeX } from 'lucide-react';
+import { Camera, Layers } from 'lucide-react';
 
 export const App: React.FC = () => {
   // Parallax Media items state (allows adding custom .png & .webm assets)
@@ -24,11 +24,11 @@ export const App: React.FC = () => {
   // Camera settings (FOV, Aperture/DoF, Glide Damping, Parallax Spread, Dolly Z)
   const [cameraSettings, setCameraSettings] = useState<CameraSettings>({
     fov: 46,
-    aperture: 1.8, // Creamy shallow cinematic bokeh
+    aperture: 1.8,
     focalPlane: 'middle',
     focusDistance: 0.5,
     dofEnabled: true,
-    smoothing: 0.045, // Soft silk momentum gliding
+    smoothing: 0.045,
     mouseParallaxFactor: 0.75,
     parallaxSpread: 1.45,
     dollyZ: 620
@@ -46,14 +46,42 @@ export const App: React.FC = () => {
   const [isCamModalOpen, setIsCamModalOpen] = useState<boolean>(false);
   const [isMediaModalOpen, setIsMediaModalOpen] = useState<boolean>(false);
 
-  // Window dimension for section math
+  // Window dimensions & Mobile detection
   const [windowWidth, setWindowWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1440);
+  const [isMobile, setIsMobile] = useState<boolean>(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
 
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
+    const handleResize = () => {
+      if (typeof window !== 'undefined') {
+        const width = window.innerWidth;
+        setWindowWidth(width);
+        setIsMobile(width < 768);
+      }
+    };
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
   }, []);
+
+  const activeSections = useMemo(() => {
+    return isMobile ? MOBILE_SECTIONS : SECTIONS;
+  }, [isMobile]);
+
+  // Mobile Parallax filtering (maps section indices to 0, 1, 2 for the 3 active mobile sections)
+  const activeParallaxItems = useMemo(() => {
+    if (!isMobile) return parallaxItems;
+    return parallaxItems
+      .filter(item => item.sectionIndex === 0 || item.sectionIndex === 3 || item.sectionIndex === 4)
+      .map(item => ({
+        ...item,
+        sectionIndex: item.sectionIndex === 3 ? 1 : item.sectionIndex === 4 ? 2 : 0
+      }));
+  }, [parallaxItems, isMobile]);
 
   // Mouse move handler for subtle 3D perspective shift
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -76,28 +104,32 @@ export const App: React.FC = () => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home' }));
   };
 
-  const scrollToSection1 = () => {
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: '2' }));
+  const scrollToNextFromHero = () => {
+    if (isMobile) {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: '2' })); // Beat Matrix on mobile
+    } else {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: '2' })); // Recording on desktop
+    }
   };
 
   return (
     <div
-      className="relative w-screen h-screen overflow-hidden bg-[#F7F6F3] text-[#18070F] select-none"
+      className="relative w-screen h-[100dvh] overflow-hidden bg-[#F7F6F3] text-[#18070F] select-none"
       onMouseMove={handleMouseMove}
     >
-      {/* 1. WebGL 3D Camera Stage (Three.js with 3D cymbals, particles & lighting) */}
+      {/* 1. WebGL 3D Camera Stage (Fine-Line Sacred Geometric Wireframes & Patterns) */}
       <CanvasStage
         scrollProgress={scrollProgress}
-        totalWidth={windowWidth * SECTIONS.length}
+        totalWidth={windowWidth * activeSections.length}
         cameraSettings={cameraSettings}
         mousePos={mousePos}
         audioActive={audioActive}
       />
 
-      {/* 2. Parallax Back Layer (Atmospheric background elements, acoustic diffusers, tape reels) */}
+      {/* 2. Parallax Back Layer (Sacred line geometry, Fibonacci spirals, Chladni frequency lines) */}
       <ParallaxLayerHost
         layer="back"
-        items={parallaxItems}
+        items={activeParallaxItems}
         scrollX={scrollX}
         sectionWidth={windowWidth}
         cameraSettings={cameraSettings}
@@ -108,48 +140,71 @@ export const App: React.FC = () => {
       <HorizontalScrollContainer
         cameraSettings={cameraSettings}
         onScrollProgress={handleScrollProgress}
-        sections={SECTIONS}
+        sections={activeSections}
         onOpenCamControls={() => setIsCamModalOpen(true)}
         onOpenMediaGuide={() => setIsMediaModalOpen(true)}
         audioActive={audioActive}
         onToggleAudio={handleToggleAudio}
       >
-        {/* Section 0: Hero */}
-        <HeroSection
-          onExplore={scrollToSection1}
-          audioActive={audioActive}
-          onToggleAudio={handleToggleAudio}
-        />
+        {isMobile ? (
+          // MOBILE VERSION: Exactly 3 essential sections (hyperballad + Beat Matrix + Archive)
+          <>
+            {/* Mobile Section 0: Hero / hyperballad */}
+            <HeroSection
+              onExplore={scrollToNextFromHero}
+              audioActive={audioActive}
+              onToggleAudio={handleToggleAudio}
+              isMobile={true}
+            />
 
-        {/* Section 1: Session Work and Recording */}
-        <SessionRecordingSection />
+            {/* Mobile Section 1: Beat Construction Matrix */}
+            <BeatConstructionSection />
 
-        {/* Section 2: Performance */}
-        <PerformanceSection />
+            {/* Mobile Section 2: Outro & Archive */}
+            <OutroSection onBackToStart={scrollToHero} />
+          </>
+        ) : (
+          // DESKTOP VERSION: Full 5 sections across all disciplines
+          <>
+            {/* Section 0: Hero */}
+            <HeroSection
+              onExplore={scrollToNextFromHero}
+              audioActive={audioActive}
+              onToggleAudio={handleToggleAudio}
+              isMobile={false}
+            />
 
-        {/* Section 3: Beat Construction */}
-        <BeatConstructionSection />
+            {/* Section 1: Session Work and Recording */}
+            <SessionRecordingSection />
 
-        {/* Section 4: Outro / Archive / Bookings */}
-        <OutroSection onBackToStart={scrollToHero} />
+            {/* Section 2: Performance */}
+            <PerformanceSection />
+
+            {/* Section 3: Beat Construction */}
+            <BeatConstructionSection />
+
+            {/* Section 4: Outro / Archive / Bookings */}
+            <OutroSection onBackToStart={scrollToHero} />
+          </>
+        )}
       </HorizontalScrollContainer>
 
-      {/* 4. Parallax Front Layer (Foreground cymbals, drum sticks, micro-timing nodes, webm videos) */}
+      {/* 4. Parallax Front Layer (Fine-line astrolabe lattices, micro-timing nodes) */}
       <ParallaxLayerHost
         layer="front"
-        items={parallaxItems}
+        items={activeParallaxItems}
         scrollX={scrollX}
         sectionWidth={windowWidth}
         cameraSettings={cameraSettings}
         onEditSlot={() => setIsMediaModalOpen(true)}
       />
 
-      {/* Top Floating Utility HUD Bar */}
+      {/* Top Floating Utility HUD Bar (Desktop only) */}
       <div className="fixed top-6 right-6 z-40 hidden md:flex items-center gap-3">
         {/* Camera Optics Quick Indicator Pill */}
         <button
           onClick={() => setIsCamModalOpen(true)}
-          className="px-3.5 py-1.5 rounded-full border border-[#D50032]/25 hover:border-[#D50032] bg-white/90 hover:bg-white text-xs font-mono tracking-wider flex items-center gap-2 backdrop-blur shadow-sm hover:shadow-md transition-all cursor-pointer"
+          className="px-3.5 py-1.5 rounded-full border border-[#D50032]/25 hover:border-[#D50032] bg-white/90 hover:bg-white text-xs font-mono tracking-wider flex items-center gap-2 backdrop-blur shadow-xs hover:shadow-md transition-all cursor-pointer"
         >
           <Camera className="w-3.5 h-3.5 text-[#D50032]" />
           <span className="text-[#18070F]/90 font-medium">
@@ -161,7 +216,7 @@ export const App: React.FC = () => {
         {/* Media Slots Quick Pill */}
         <button
           onClick={() => setIsMediaModalOpen(true)}
-          className="px-3.5 py-1.5 rounded-full border border-[#D50032]/25 hover:border-[#A50034] bg-white/90 hover:bg-white text-xs font-mono tracking-wider flex items-center gap-2 backdrop-blur shadow-sm hover:shadow-md transition-all cursor-pointer"
+          className="px-3.5 py-1.5 rounded-full border border-[#D50032]/25 hover:border-[#A50034] bg-white/90 hover:bg-white text-xs font-mono tracking-wider flex items-center gap-2 backdrop-blur shadow-xs hover:shadow-md transition-all cursor-pointer"
         >
           <Layers className="w-3.5 h-3.5 text-[#D50032]" />
           <span className="text-[#18070F]/90 font-medium">PARALLAX SLOTS</span>

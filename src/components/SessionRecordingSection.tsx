@@ -73,7 +73,7 @@ export const SessionRecordingSection: React.FC = () => {
           </h2>
 
           <p className="text-sm sm:text-base text-[#3F353A] leading-relaxed font-['Plus_Jakarta_Sans'] font-normal">
-            In recording sessions, sound is natural mathematics made audible. Each drum head vibrates according to Chladni nodal plate geometries, captured through figure-8 ribbon physics and vintage cross-laminated Michigan maple shells with locked micro-timing.
+            In recording sessions, sound is natural geometry and pattern made audible. Each drum head vibrates according to Chladni nodal plate geometries, captured through figure-8 ribbon physics and vintage cross-laminated Michigan maple shells with locked micro-timing.
           </p>
 
           <div className="grid grid-cols-2 gap-3 pt-2">
