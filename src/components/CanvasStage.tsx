@@ -31,7 +31,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     // 1. Scene setup with soft white botanical fog
     const scene = new THREE.Scene();
     sceneRef.current = scene;
-    scene.fog = new THREE.FogExp2(0xF7F6F3, 0.00055);
+    scene.fog = new THREE.FogExp2(0xF7F6F3, 0.0005);
 
     const width = mountRef.current.clientWidth;
     const height = mountRef.current.clientHeight;
@@ -65,15 +65,15 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     const ambientLight = new THREE.AmbientLight(0xfff7f8, 2.6);
     scene.add(ambientLight);
 
-    const crimsonKeyLight = new THREE.DirectionalLight(0xd50032, 2.4);
+    const crimsonKeyLight = new THREE.DirectionalLight(0xd50032, 2.2);
     crimsonKeyLight.position.set(220, 320, 420);
     scene.add(crimsonKeyLight);
 
-    const blossomFillLight = new THREE.DirectionalLight(0xffb3ba, 2.0);
+    const blossomFillLight = new THREE.DirectionalLight(0xffb3ba, 1.8);
     blossomFillLight.position.set(-200, -120, -180);
     scene.add(blossomFillLight);
 
-    // 5. Fine Line Style Geometric Wireframes & Sacred Pattern Curves (Zero solid discs/cymbals)
+    // 5. Fine Line Style Geometric Wireframes (Smooth, Calm, Zero Solid Discs)
     const geometricGroups: THREE.Group[] = [];
     const sectionSpans = [0, 800, 1600, 2400, 3200];
     const PHI = 1.6180339887; // The Golden Ratio
@@ -96,7 +96,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
         const circleMat = new THREE.LineBasicMaterial({
           color: lineColors[rIdx],
           transparent: true,
-          opacity: 0.45 - rIdx * 0.1,
+          opacity: 0.38 - rIdx * 0.08,
           linewidth: 1
         });
         const line = new THREE.LineLoop(circleGeo, circleMat);
@@ -104,25 +104,25 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
         group.add(line);
       });
 
-      // (B) Fine-Line Sacred Geometry Polytope Wireframe (Icosahedron / Octahedron lines)
-      const icosaGeo = new THREE.IcosahedronGeometry(55 + (idx % 2) * 15, 0);
+      // (B) Fine-Line Sacred Polyhedron Wireframe (Icosahedron lines)
+      const icosaGeo = new THREE.IcosahedronGeometry(52 + (idx % 2) * 12, 0);
       const icosaEdges = new THREE.EdgesGeometry(icosaGeo);
       const wireMat = new THREE.LineBasicMaterial({
         color: idx % 2 === 0 ? 0xd50032 : 0xa50034,
         transparent: true,
-        opacity: 0.35,
+        opacity: 0.3,
         linewidth: 1
       });
       const polyLine = new THREE.LineSegments(icosaEdges, wireMat);
       group.add(polyLine);
 
       // (C) Nested Inner Octahedron Fine Wireframe
-      const octaGeo = new THREE.OctahedronGeometry(28, 0);
+      const octaGeo = new THREE.OctahedronGeometry(26, 0);
       const octaEdges = new THREE.EdgesGeometry(octaGeo);
       const octaMat = new THREE.LineBasicMaterial({
         color: 0xffb3ba,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.45,
         linewidth: 1
       });
       const innerPoly = new THREE.LineSegments(octaEdges, octaMat);
@@ -133,7 +133,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       const spiralSteps = 80;
       for (let s = 0; s < spiralSteps; s++) {
         const t = (s / spiralSteps) * (Math.PI * 4);
-        const radius = Math.pow(PHI, t / Math.PI) * 7.5;
+        const radius = Math.pow(PHI, t / Math.PI) * 7.0;
         spiralPoints.push(
           new THREE.Vector3(
             Math.cos(t) * radius,
@@ -146,7 +146,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       const spiralMat = new THREE.LineBasicMaterial({
         color: 0xd50032,
         transparent: true,
-        opacity: 0.38,
+        opacity: 0.32,
         linewidth: 1
       });
       const spiralLine = new THREE.Line(spiralGeo, spiralMat);
@@ -157,16 +157,15 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       const yOffsets = [-25, 60, -65, 45, -15];
 
       group.position.set(xPos, yOffsets[idx], zDepths[idx]);
-      group.scale.setScalar(0.75 + (idx % 3) * 0.18);
+      group.scale.setScalar(0.72 + (idx % 3) * 0.16);
       scene.add(group);
       geometricGroups.push(group);
     });
 
     fineLineGeometricMeshesRef.current = geometricGroups;
 
-    // 6. Generative Phyllotaxis Flower & Golden Spiral Spores (Geometry + Nature + Patterns)
-    // Formula: theta = n * 137.5077° (Golden Angle), r = c * sqrt(n)
-    const particleCount = 750;
+    // 6. Generative Phyllotaxis Flower & Golden Spiral Spores (Calm, Serene, Less Busy)
+    const particleCount = 420; // Reduced count for calm elegance
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -177,16 +176,16 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     const c3 = new THREE.Color(0xf9c2c2); // Soft Blush
     const c4 = new THREE.Color(0xffffff); // Pure White
 
-    const GOLDEN_ANGLE = 137.507764 * (Math.PI / 180); // ~2.39996 rad
+    const GOLDEN_ANGLE = 137.507764 * (Math.PI / 180);
 
     for (let i = 0; i < particleCount; i++) {
       const sectionOffset = (i / particleCount) * 3600 - 150;
       const angle = i * GOLDEN_ANGLE;
-      const radius = Math.sqrt(i % 150) * 28;
+      const radius = Math.sqrt(i % 120) * 26;
 
       positions[i * 3] = sectionOffset + Math.cos(angle) * (radius * 0.4);
-      positions[i * 3 + 1] = Math.sin(angle) * radius + (Math.sin(i * 0.2) * 40);
-      positions[i * 3 + 2] = Math.cos(angle * 1.618) * 400 + (Math.random() - 0.5) * 100;
+      positions[i * 3 + 1] = Math.sin(angle) * radius + (Math.sin(i * 0.15) * 30);
+      positions[i * 3 + 2] = Math.cos(angle * 1.618) * 380 + (Math.random() - 0.5) * 80;
 
       const seed = i % 4;
       const col = seed === 0 ? c1 : seed === 1 ? c2 : seed === 2 ? c3 : c4;
@@ -194,7 +193,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       colors[i * 3 + 1] = col.g;
       colors[i * 3 + 2] = col.b;
 
-      sizes[i] = Math.random() * 4.5 + 2.0;
+      sizes[i] = Math.random() * 3.5 + 2.0;
     }
 
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -207,8 +206,8 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     const pCtx = pCanvas.getContext('2d')!;
     const radGrad = pCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
     radGrad.addColorStop(0, 'rgba(255,255,255,1)');
-    radGrad.addColorStop(0.35, 'rgba(255,179,186,0.9)');
-    radGrad.addColorStop(0.7, 'rgba(213,0,50,0.5)');
+    radGrad.addColorStop(0.35, 'rgba(255,179,186,0.8)');
+    radGrad.addColorStop(0.7, 'rgba(213,0,50,0.35)');
     radGrad.addColorStop(1, 'rgba(0,0,0,0)');
     pCtx.fillStyle = radGrad;
     pCtx.fillRect(0, 0, 32, 32);
@@ -216,11 +215,11 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     const pTexture = new THREE.CanvasTexture(pCanvas);
 
     const particleMat = new THREE.PointsMaterial({
-      size: 7,
+      size: 6,
       vertexColors: true,
       map: pTexture,
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.42, // Soft, non-intrusive
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -229,7 +228,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     scene.add(particles);
     phyllotaxisPointsRef.current = particles;
 
-    // 7. Render Loop with Smooth Camera Motion
+    // 7. Render Loop with Smooth, Slow & Reactive Motion (Zero Frenetic Spinning)
     let clock = new THREE.Clock();
 
     const animate = () => {
@@ -244,38 +243,48 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       const trackLength = totalWidth - width;
       const targetCamX = scrollProgress * (trackLength > 0 ? trackLength : 3200);
 
-      const mouseFactor = cameraSettings.mouseParallaxFactor * 60;
+      const mouseFactor = cameraSettings.mouseParallaxFactor * 50;
       const targetCamY = mousePos.y * mouseFactor;
       const mouseCamXOffset = mousePos.x * mouseFactor;
 
       // Smooth Camera Damping
       const smoothFactor = Math.min(1, delta * (cameraSettings.smoothing * 60));
       cameraRef.current.position.x += (targetCamX + mouseCamXOffset - cameraRef.current.position.x) * smoothFactor;
-      cameraRef.current.position.y += (targetCamY - cameraRef.current.position.y) * 0.06;
-      cameraRef.current.position.z += (cameraSettings.dollyZ - cameraRef.current.position.z) * 0.08;
+      cameraRef.current.position.y += (targetCamY - cameraRef.current.position.y) * 0.05;
+      cameraRef.current.position.z += (cameraSettings.dollyZ - cameraRef.current.position.z) * 0.06;
 
-      cameraRef.current.lookAt(cameraRef.current.position.x + 30, cameraRef.current.position.y * 0.3, 0);
+      cameraRef.current.lookAt(cameraRef.current.position.x + 25, cameraRef.current.position.y * 0.25, 0);
 
-      // Rotate Fine-Line Geometric Wireframe Sculptures
+      // Smooth, Slow, Reactive Wireframe Rotation (Calm ambient drift + subtle mouse response)
       fineLineGeometricMeshesRef.current.forEach((group, i) => {
-        const audioResonance = audioActive ? Math.sin(elapsedTime * 6 + i) * 0.05 : 0;
-        group.rotation.y += (0.18 + i * 0.06 + (audioActive ? 0.25 : 0)) * delta;
-        group.rotation.x += (0.08 + i * 0.04) * delta;
-        group.position.y = Math.sin(elapsedTime * 1.4 + i * 1.618) * 6 + audioResonance * 14;
+        // Very slow, peaceful ambient rotation
+        group.rotation.y += 0.02 * delta;
 
-        // Gentle breathing pulsation
-        const breath = 1 + Math.sin(elapsedTime * 1.618 + i) * 0.03 + (audioActive ? 0.05 : 0);
+        // Reactive tilt tracking user's mouse gently
+        const targetRotX = mousePos.y * 0.12 + Math.sin(elapsedTime * 0.4 + i) * 0.04;
+        const targetRotZ = mousePos.x * 0.1;
+        group.rotation.x += (targetRotX - group.rotation.x) * 0.025;
+        group.rotation.z += (targetRotZ - group.rotation.z) * 0.025;
+
+        // Subtle, gentle floating height drift (no frenetic bobbing)
+        const gentleFloat = Math.sin(elapsedTime * 0.5 + i) * 1.8;
+        group.position.y = yOffsets[i] + gentleFloat + (audioActive ? Math.sin(elapsedTime * 2 + i) * 1.2 : 0);
+
+        // Very subtle breathing pulse
+        const breath = 1 + Math.sin(elapsedTime * 0.8 + i) * 0.015;
         group.scale.set(breath, breath, breath);
       });
 
-      // Phyllotaxis Flower Spiral: Natural organic wave drift
+      // Calm, slow drift for particles
       if (phyllotaxisPointsRef.current) {
-        phyllotaxisPointsRef.current.rotation.x = Math.sin(elapsedTime * 0.5) * 0.05;
-        phyllotaxisPointsRef.current.rotation.z = elapsedTime * 0.015;
+        phyllotaxisPointsRef.current.rotation.z = elapsedTime * 0.003;
+        phyllotaxisPointsRef.current.rotation.x = Math.sin(elapsedTime * 0.2) * 0.01;
       }
 
       rendererRef.current.render(sceneRef.current, cameraRef.current);
     };
+
+    const yOffsets = [-25, 60, -65, 45, -15];
 
     animate();
 
