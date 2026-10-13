@@ -54,7 +54,7 @@ export const SessionRecordingSection: React.FC = () => {
         </div>
 
         <div className="hidden sm:flex items-center gap-3 px-3.5 py-1.5 rounded-full border border-[#F9C2C2]/60 bg-white/90 text-[11px] font-mono text-[#A50034] shadow-xs">
-          <Radio className="w-3.5 h-3.5 text-[#D50032] animate-pulse" />
+          <Radio className="w-3.5 h-3.5 text-[#D50032]" />
           <span>STUDER A800 24-TRACK // ANALOG SATURATION 15 IPS</span>
         </div>
       </div>

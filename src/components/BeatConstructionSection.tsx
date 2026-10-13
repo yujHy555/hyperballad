@@ -256,7 +256,7 @@ export const BeatConstructionSection: React.FC = () => {
                   onClick={handleTogglePlay}
                   className={`px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-mono border transition-all cursor-pointer shadow-md flex items-center gap-1.5 sm:gap-2 ${
                     isPlaying
-                      ? 'bg-[#D50032] text-white border-[#D50032] shadow-[0_0_15px_rgba(213,0,50,0.5)] animate-pulse'
+                      ? 'bg-[#D50032] text-white border-[#D50032] shadow-[0_0_15px_rgba(213,0,50,0.5)]'
                       : 'bg-white text-[#D50032] border-[#D50032] hover:bg-[#D50032] hover:text-white'
                   }`}
                 >

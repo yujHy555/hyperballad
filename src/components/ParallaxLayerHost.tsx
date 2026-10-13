@@ -113,21 +113,14 @@ export const ParallaxLayerHost: React.FC<ParallaxLayerHostProps> = ({
               zIndex: item.position.zIndex || 10
             }}
           >
-            <div className="relative group/slot">
+            <div
+              className="animate-smooth-float"
+              style={{
+                animationDuration: `${10 + (item.sectionIndex % 3) * 3}s`,
+                animationDelay: `${(item.sectionIndex * 0.9).toFixed(1)}s`
+              }}
+            >
               <ParallaxItemRenderer item={item} layer={layer} />
-
-              {/* Slot Quick Action / Info Pill */}
-              {onEditSlot && (
-                <button
-                  onClick={() => onEditSlot(item)}
-                  className="opacity-0 group-hover/slot:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-[#18060d]/95 hover:bg-[#250814] text-[#FFB3BA] border border-[#D50032]/50 text-[10px] font-mono px-3 py-1 rounded-full backdrop-blur shadow-[0_5px_15px_rgba(213,0,50,0.3)] flex items-center gap-1.5 whitespace-nowrap cursor-pointer z-50"
-                  title="Configure transparent image (.png) or video (.webm)"
-                >
-                  <span className="text-[#D50032]">✦</span>
-                  <span>Layer: {layer}</span>
-                  <span className="text-white/60">| Edit Slot</span>
-                </button>
-              )}
             </div>
           </div>
         );

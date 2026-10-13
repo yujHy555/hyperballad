@@ -62,7 +62,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="relative z-20 flex justify-between items-center w-full max-w-7xl mx-auto mb-2 sm:mb-4">
         <div className="flex items-center gap-2.5 sm:gap-3.5">
           <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#D50032]/40 flex items-center justify-center bg-white shadow-xs">
-            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#D50032] animate-pulse" />
+            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#D50032]" />
           </div>
           <div>
             <span className="font-['Cinzel'] tracking-[0.22em] sm:tracking-[0.28em] text-[10px] sm:text-xs text-[#A50034] font-bold uppercase block">
@@ -89,7 +89,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 : 'bg-white border-[#F9C2C2]/80 text-[#3F353A] hover:border-[#D50032] hover:text-[#D50032]'
             }`}
           >
-            {audioActive ? <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 animate-bounce text-white" /> : <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
+            {audioActive ? <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" /> : <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5" />}
             <span>{audioActive ? 'JAZZ SWING [LIVE]' : 'ENABLE AUDIO'}</span>
           </button>
         </div>
@@ -131,7 +131,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Top Video Status Pill */}
           <div className="absolute top-2.5 sm:top-4 left-2.5 sm:left-4 bg-white/90 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[#F9C2C2]/80 text-[10px] sm:text-[11px] font-mono text-[#18070F] flex items-center gap-1.5 sm:gap-2 shadow-md pointer-events-none">
-            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#D50032] animate-pulse" />
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#D50032]" />
             <span className="font-bold text-[#A50034]">LIVE DRUMMING</span>
             <span className="text-[#7A6E74] hidden sm:inline">• 1280×720</span>
           </div>
@@ -159,7 +159,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 }`}
                 title={isVideoMuted ? 'Unmute Video Audio' : 'Mute Video Audio'}
               >
-                {isVideoMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#A50034]" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white animate-pulse" />}
+                {isVideoMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#A50034]" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />}
                 <span>{isVideoMuted ? 'UNMUTE AUDIO' : 'AUDIO LIVE'}</span>
               </button>
             </div>
@@ -223,7 +223,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Tempo and Metric Signature */}
         <div className="flex items-center gap-3 sm:gap-6 font-mono text-[10px] sm:text-xs text-[#7A6E74]">
           <div className="flex items-center gap-1.5">
-            <Disc className="w-3 h-3 text-[#D50032] animate-spin" />
+            <Disc className="w-3 h-3 text-[#D50032]" />
             <span className="text-[#18070F] font-semibold">132 BPM</span>
           </div>
           <span className="text-[#F9C2C2]">•</span>

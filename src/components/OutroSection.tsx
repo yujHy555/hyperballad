@@ -96,7 +96,7 @@ export const OutroSection: React.FC<OutroSectionProps> = ({ onBackToStart }) => 
 
             {submitted ? (
               <div className="p-6 text-center space-y-2 rounded-xl bg-[#FFB3BA]/20 border border-[#D50032]/40">
-                <Check className="w-7 h-7 text-[#D50032] mx-auto animate-bounce" />
+                <Check className="w-7 h-7 text-[#D50032] mx-auto" />
                 <h4 className="text-base sm:text-lg font-['Instrument_Serif'] text-[#18070F]">Inquiry Received</h4>
                 <p className="text-[11px] font-mono text-[#7A6E74]">
                   Thank you. Your session request has been logged. Let's make rhythm happen.

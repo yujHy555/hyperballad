@@ -15,7 +15,7 @@ export const INITIAL_PARALLAX_ITEMS: ParallaxMediaItem[] = [
     type: 'html',
     layer: 'front',
     sectionIndex: 0,
-    title: '22" Resonant Bronze with Phyllotaxis Lathe',
+    title: '22" Resonant Bronze Lathe Lines',
     position: { xPercent: 88, yPercent: 62, scale: 1.1, zIndex: 30 }
   },
 
@@ -33,11 +33,11 @@ export const INITIAL_PARALLAX_ITEMS: ParallaxMediaItem[] = [
     type: 'html',
     layer: 'front',
     sectionIndex: 1,
-    title: 'Michigan Maple & Botanical Grain Venation',
+    title: 'Acoustic Axis Strike Vectors',
     position: { xPercent: 78, yPercent: 70, scale: 1.15, zIndex: 30 }
   },
 
-  // SECTION 2: PERFORMANCE — Natural Wave Harmonics & Live Stage Video
+  // SECTION 2: PERFORMANCE — Natural Wave Harmonics
   {
     id: 'perf-back-waves',
     type: 'html',
@@ -53,15 +53,6 @@ export const INITIAL_PARALLAX_ITEMS: ParallaxMediaItem[] = [
     sectionIndex: 2,
     title: 'Geometric Bronze Blossom Splash',
     position: { xPercent: 82, yPercent: 28, scale: 1.2, zIndex: 30 }
-  },
-  {
-    id: 'perf-front-live-video',
-    type: 'video',
-    layer: 'front',
-    src: '/videos/hb_05_1.mp4',
-    sectionIndex: 2,
-    title: 'Live Stage Capture // Take 05',
-    position: { xPercent: 88, yPercent: 72, scale: 0.85, zIndex: 35 }
   },
 
   // SECTION 3: BEAT CONSTRUCTION — Euclidean Geometry & Golden Angle

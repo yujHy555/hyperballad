@@ -168,7 +168,7 @@ export const PerformanceSection: React.FC = () => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-3 left-3 bg-white/95 backdrop-blur px-2.5 py-1 rounded-md border border-[#F9C2C2]/80 text-[10px] font-mono text-[#18070F] flex items-center gap-2 pointer-events-none shadow-sm">
-                    <span className="w-2 h-2 rounded-full bg-[#D50032] animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-[#D50032]" />
                     <span className="font-bold text-[#A50034]">LIVE DRUMMING CAPTURE</span>
                   </div>
                 </div>

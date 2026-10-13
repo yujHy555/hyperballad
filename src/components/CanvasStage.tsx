@@ -25,6 +25,21 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
   const phyllotaxisPointsRef = useRef<THREE.Points | null>(null);
   const animFrameRef = useRef<number | null>(null);
 
+  // Keep references to incoming dynamic props to avoid tearing down the WebGL scene on every frame
+  const scrollProgressRef = useRef(scrollProgress);
+  const totalWidthRef = useRef(totalWidth);
+  const cameraSettingsRef = useRef(cameraSettings);
+  const mousePosRef = useRef(mousePos);
+  const audioActiveRef = useRef(audioActive);
+
+  useEffect(() => {
+    scrollProgressRef.current = scrollProgress;
+    totalWidthRef.current = totalWidth;
+    cameraSettingsRef.current = cameraSettings;
+    mousePosRef.current = mousePos;
+    audioActiveRef.current = audioActive;
+  });
+
   useEffect(() => {
     if (!mountRef.current) return;
 
@@ -33,20 +48,20 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     sceneRef.current = scene;
     scene.fog = new THREE.FogExp2(0xF7F6F3, 0.0005);
 
-    const width = mountRef.current.clientWidth;
-    const height = mountRef.current.clientHeight;
+    let width = mountRef.current.clientWidth || window.innerWidth;
+    let height = mountRef.current.clientHeight || window.innerHeight;
 
     // 2. Camera setup
     const camera = new THREE.PerspectiveCamera(
-      cameraSettings.fov,
+      cameraSettingsRef.current.fov,
       width / height,
       1,
       3200
     );
-    camera.position.set(0, 0, cameraSettings.dollyZ);
+    camera.position.set(0, 0, cameraSettingsRef.current.dollyZ);
     cameraRef.current = camera;
 
-    // 3. WebGL Renderer
+    // 3. WebGL Renderer (high-precision, antialiased, hardware accelerated)
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
@@ -73,10 +88,13 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     blossomFillLight.position.set(-200, -120, -180);
     scene.add(blossomFillLight);
 
-    // 5. Fine Line Style Geometric Wireframes (Smooth, Calm, Zero Solid Discs)
+    // 5. Fine Line Style Geometric Wireframes (Zero Solid Shapes, Pure Elegant Lines)
     const geometricGroups: THREE.Group[] = [];
     const sectionSpans = [0, 800, 1600, 2400, 3200];
     const PHI = 1.6180339887; // The Golden Ratio
+    const baseScales = [0.72, 0.88, 1.04, 0.72, 0.88];
+    const yOffsets = [-25, 60, -65, 45, -15];
+    const zDepths = [-140, 40, -100, 80, -35];
 
     sectionSpans.forEach((xPos, idx) => {
       const group = new THREE.Group();
@@ -153,19 +171,16 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       spiralLine.rotation.x = Math.PI / 2.4;
       group.add(spiralLine);
 
-      const zDepths = [-140, 40, -100, 80, -35];
-      const yOffsets = [-25, 60, -65, 45, -15];
-
       group.position.set(xPos, yOffsets[idx], zDepths[idx]);
-      group.scale.setScalar(0.72 + (idx % 3) * 0.16);
+      group.scale.setScalar(baseScales[idx]);
       scene.add(group);
       geometricGroups.push(group);
     });
 
     fineLineGeometricMeshesRef.current = geometricGroups;
 
-    // 6. Generative Phyllotaxis Flower & Golden Spiral Spores (Calm, Serene, Less Busy)
-    const particleCount = 420; // Reduced count for calm elegance
+    // 6. Generative Phyllotaxis Flower & Golden Spiral Spores (Serene, Less Busy)
+    const particleCount = 380;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -193,7 +208,7 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
       colors[i * 3 + 1] = col.g;
       colors[i * 3 + 2] = col.b;
 
-      sizes[i] = Math.random() * 3.5 + 2.0;
+      sizes[i] = Math.random() * 3.0 + 1.8;
     }
 
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -206,8 +221,8 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     const pCtx = pCanvas.getContext('2d')!;
     const radGrad = pCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
     radGrad.addColorStop(0, 'rgba(255,255,255,1)');
-    radGrad.addColorStop(0.35, 'rgba(255,179,186,0.8)');
-    radGrad.addColorStop(0.7, 'rgba(213,0,50,0.35)');
+    radGrad.addColorStop(0.35, 'rgba(255,179,186,0.75)');
+    radGrad.addColorStop(0.7, 'rgba(213,0,50,0.3)');
     radGrad.addColorStop(1, 'rgba(0,0,0,0)');
     pCtx.fillStyle = radGrad;
     pCtx.fillRect(0, 0, 32, 32);
@@ -215,11 +230,11 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     const pTexture = new THREE.CanvasTexture(pCanvas);
 
     const particleMat = new THREE.PointsMaterial({
-      size: 6,
+      size: 5.5,
       vertexColors: true,
       map: pTexture,
       transparent: true,
-      opacity: 0.42, // Soft, non-intrusive
+      opacity: 0.38,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -228,70 +243,89 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     scene.add(particles);
     phyllotaxisPointsRef.current = particles;
 
-    // 7. Render Loop with Smooth, Slow & Reactive Motion (Zero Frenetic Spinning)
-    let clock = new THREE.Clock();
+    // 7. Window Resize Listener
+    const handleResize = () => {
+      if (!mountRef.current || !rendererRef.current || !cameraRef.current) return;
+      width = mountRef.current.clientWidth || window.innerWidth;
+      height = mountRef.current.clientHeight || window.innerHeight;
+      cameraRef.current.aspect = width / height;
+      cameraRef.current.updateProjectionMatrix();
+      rendererRef.current.setSize(width, height);
+    };
+    window.addEventListener('resize', handleResize);
+
+    // 8. Continuous High-Performance Render Loop (Smooth, Slow, Graceful & Reactive)
+    const clock = new THREE.Clock();
 
     const animate = () => {
       animFrameRef.current = requestAnimationFrame(animate);
 
       if (!cameraRef.current || !sceneRef.current || !rendererRef.current) return;
 
-      const delta = clock.getDelta();
+      const delta = Math.min(0.05, clock.getDelta());
       const elapsedTime = clock.getElapsedTime();
 
+      const curSettings = cameraSettingsRef.current;
+      const curMouse = mousePosRef.current;
+      const curScroll = scrollProgressRef.current;
+      const curTotalW = totalWidthRef.current;
+
       // Camera Horizontal Dolly based on Scroll
-      const trackLength = totalWidth - width;
-      const targetCamX = scrollProgress * (trackLength > 0 ? trackLength : 3200);
+      const trackLength = curTotalW - width;
+      const targetCamX = curScroll * (trackLength > 0 ? trackLength : 3200);
 
-      const mouseFactor = cameraSettings.mouseParallaxFactor * 50;
-      const targetCamY = mousePos.y * mouseFactor;
-      const mouseCamXOffset = mousePos.x * mouseFactor;
+      const mouseFactor = curSettings.mouseParallaxFactor * 40;
+      const targetCamY = curMouse.y * mouseFactor;
+      const mouseCamXOffset = curMouse.x * mouseFactor;
 
-      // Smooth Camera Damping
-      const smoothFactor = Math.min(1, delta * (cameraSettings.smoothing * 60));
+      // Ultra-smooth Camera Damping
+      const smoothFactor = Math.min(1, delta * (curSettings.smoothing * 60));
       cameraRef.current.position.x += (targetCamX + mouseCamXOffset - cameraRef.current.position.x) * smoothFactor;
-      cameraRef.current.position.y += (targetCamY - cameraRef.current.position.y) * 0.05;
-      cameraRef.current.position.z += (cameraSettings.dollyZ - cameraRef.current.position.z) * 0.06;
+      cameraRef.current.position.y += (targetCamY - cameraRef.current.position.y) * 0.035;
+      cameraRef.current.position.z += (curSettings.dollyZ - cameraRef.current.position.z) * 0.045;
 
-      cameraRef.current.lookAt(cameraRef.current.position.x + 25, cameraRef.current.position.y * 0.25, 0);
+      cameraRef.current.lookAt(cameraRef.current.position.x + 20, cameraRef.current.position.y * 0.2, 0);
 
-      // Smooth, Slow, Reactive Wireframe Rotation (Calm ambient drift + subtle mouse response)
+      // Smooth, Slow, Graceful Wireframe Rotation (Peaceful ambient drift + delicate mouse response)
       fineLineGeometricMeshesRef.current.forEach((group, i) => {
-        // Very slow, peaceful ambient rotation
-        group.rotation.y += 0.02 * delta;
+        // Ultra-slow, peaceful ambient rotation (no jitter, no fast spin)
+        group.rotation.y += 0.008 * delta;
 
-        // Reactive tilt tracking user's mouse gently
-        const targetRotX = mousePos.y * 0.12 + Math.sin(elapsedTime * 0.4 + i) * 0.04;
-        const targetRotZ = mousePos.x * 0.1;
+        // Smooth reactive tilt gently tracking user mouse position
+        const targetRotX = curMouse.y * 0.12;
+        const targetRotZ = -curMouse.x * 0.12;
         group.rotation.x += (targetRotX - group.rotation.x) * 0.025;
         group.rotation.z += (targetRotZ - group.rotation.z) * 0.025;
 
-        // Subtle, gentle floating height drift (no frenetic bobbing)
-        const gentleFloat = Math.sin(elapsedTime * 0.5 + i) * 1.8;
-        group.position.y = yOffsets[i] + gentleFloat + (audioActive ? Math.sin(elapsedTime * 2 + i) * 1.2 : 0);
+        // Very gentle, serene floating drift
+        const gentleFloat = Math.sin(elapsedTime * 0.35 + i) * 1.4;
+        group.position.y = yOffsets[i] + gentleFloat;
 
-        // Very subtle breathing pulse
-        const breath = 1 + Math.sin(elapsedTime * 0.8 + i) * 0.015;
+        // Subtle organic breathing scale
+        const breath = baseScales[i] * (1 + Math.sin(elapsedTime * 0.45 + i) * 0.012);
         group.scale.set(breath, breath, breath);
       });
 
-      // Calm, slow drift for particles
+      // Majestic, serene drift for ambient phyllotaxis particles
       if (phyllotaxisPointsRef.current) {
-        phyllotaxisPointsRef.current.rotation.z = elapsedTime * 0.003;
-        phyllotaxisPointsRef.current.rotation.x = Math.sin(elapsedTime * 0.2) * 0.01;
+        phyllotaxisPointsRef.current.rotation.z = elapsedTime * 0.0012;
+        phyllotaxisPointsRef.current.rotation.y = Math.sin(elapsedTime * 0.1) * 0.003;
       }
 
       rendererRef.current.render(sceneRef.current, cameraRef.current);
     };
 
-    const yOffsets = [-25, 60, -65, 45, -15];
-
     animate();
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      if (rendererRef.current && rendererRef.current.domElement) {
+        rendererRef.current.domElement.remove();
+        rendererRef.current.dispose();
+      }
     };
-  }, [scrollProgress, cameraSettings, mousePos, audioActive]);
+  }, []); // Run setup once on mount; all live state tracked via stable useRefs
 
   return (
     <div

@@ -284,7 +284,7 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
             }`}
             title="Toggle Procedural Jazz Percussion Audio"
           >
-            {audioActive ? <Volume2 className="w-3.5 h-3.5 animate-pulse text-white" /> : <VolumeX className="w-3.5 h-3.5" />}
+            {audioActive ? <Volume2 className="w-3.5 h-3.5 text-white" /> : <VolumeX className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>
