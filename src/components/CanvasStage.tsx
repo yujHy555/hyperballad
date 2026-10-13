@@ -92,9 +92,9 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
     const geometricGroups: THREE.Group[] = [];
     const sectionSpans = [0, 800, 1600, 2400, 3200];
     const PHI = 1.6180339887; // The Golden Ratio
-    const baseScales = [0.72, 0.88, 1.04, 0.72, 0.88];
-    const yOffsets = [-25, 60, -65, 45, -15];
-    const zDepths = [-140, 40, -100, 80, -35];
+    const baseScales = [1.65, 1.95, 2.3, 1.75, 2.05];
+    const yOffsets = [-15, 45, -45, 35, -10];
+    const zDepths = [-150, 30, -110, 60, -45];
 
     sectionSpans.forEach((xPos, idx) => {
       const group = new THREE.Group();
