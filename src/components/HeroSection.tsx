@@ -151,7 +151,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Main Center Hero Block with 1280x720 Rounded Video */}
       <div className="relative z-20 w-full max-w-7xl mx-auto my-auto flex flex-col items-center">
         {/* Title Row */}
-        <div className="w-full flex flex-col mb-1 sm:mb-2 md:mb-3">
+        <div className="w-full flex flex-col mb-3 sm:mb-5 md:mb-6">
           <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1 sm:mb-2">
             <span className="px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono tracking-widest text-[#D50032] bg-[#FFB3BA]/30 border border-[#D50032]/30 uppercase font-semibold self-start">
               Nature × Geometry • Patterns × Beauty
@@ -161,13 +161,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </p>
           </div>
 
-          <h1 className="font-['Instrument_Serif'] text-7xl sm:text-[9.5rem] md:text-[12.5rem] lg:text-[15.5rem] xl:text-[18rem] 2xl:text-[20rem] tracking-tighter leading-[0.78] text-[#18070F] w-full select-none">
+          <h1 className="font-['Instrument_Serif'] text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[8.5rem] tracking-tight leading-[0.96] pb-1 sm:pb-2 text-[#18070F] w-full select-none">
             hyper<span className="italic font-normal text-[#D50032]">ballad</span>
           </h1>
         </div>
 
         {/* 1280x720 Rounded Video Player (Adaptive for Portrait & Landscape) */}
-        <div className="relative w-full max-w-[1280px] aspect-[16/9] max-h-[36vh] sm:max-h-[42vh] md:max-h-[46vh] rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-[#F9C2C2]/70 shadow-[0_20px_50px_rgba(165,0,52,0.12),0_4px_25px_rgba(0,0,0,0.06)] bg-black group">
+        <div className="relative w-full max-w-[1280px] aspect-[16/9] max-h-[34vh] sm:max-h-[40vh] md:max-h-[46vh] rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-[#F9C2C2]/70 shadow-[0_20px_50px_rgba(165,0,52,0.12),0_4px_25px_rgba(0,0,0,0.06)] bg-black group">
           <video
             ref={videoRef}
             src="/videos/hb_05_1.mp4"
