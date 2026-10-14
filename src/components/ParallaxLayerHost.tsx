@@ -105,7 +105,7 @@ export const ParallaxLayerHost: React.FC<ParallaxLayerHostProps> = ({
         return (
           <div
             key={item.id}
-            className="absolute pointer-events-auto"
+            className="absolute pointer-events-none"
             style={{
               left: `${itemX}px`,
               top: itemY,

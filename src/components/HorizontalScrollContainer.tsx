@@ -116,7 +116,7 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
 
   // Mouse Drag Events
   const handleMouseDown = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('button, input, select, textarea, a, .no-drag')) {
+    if ((e.target as HTMLElement).closest('button, input, select, textarea, a, video, .no-drag')) {
       return;
     }
     isDragging.current = true;
@@ -150,7 +150,7 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
 
   // Touch Swipe Events for Mobile Devices (Smooth thumb gestures)
   const handleTouchStart = (e: React.TouchEvent) => {
-    if ((e.target as HTMLElement).closest('button, input, select, textarea, a, .no-drag')) {
+    if ((e.target as HTMLElement).closest('button, input, select, textarea, a, video, .no-drag')) {
       return;
     }
     isDragging.current = true;

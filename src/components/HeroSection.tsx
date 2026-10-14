@@ -29,27 +29,80 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     }
   }, []);
 
-  const toggleVideoPlay = () => {
-    if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setIsVideoPlaying(true);
+  const toggleVideoPlay = (e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      const p = video.play();
+      if (p !== undefined) {
+        p.then(() => setIsVideoPlaying(true)).catch(() => {
+          // Retry muted if browser policy blocked unmuted play
+          video.muted = true;
+          setIsVideoMuted(true);
+          video.play().then(() => setIsVideoPlaying(true)).catch(() => {});
+        });
+      }
     } else {
-      videoRef.current.pause();
+      video.pause();
       setIsVideoPlaying(false);
     }
   };
 
-  const toggleVideoMute = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !videoRef.current.muted;
-    setIsVideoMuted(videoRef.current.muted);
+  const toggleVideoMute = (e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+    if (!nextMuted) {
+      video.volume = 1.0;
+      if (video.paused) {
+        video.play().catch(() => {});
+      }
+    }
+    setIsVideoMuted(nextMuted);
   };
 
-  const handleFullscreen = () => {
-    if (!videoRef.current) return;
-    if (videoRef.current.requestFullscreen) {
-      videoRef.current.requestFullscreen();
+  const handleFullscreen = (e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    try {
+      // 1. iOS Safari (iPhone) native method
+      if (typeof (video as any).webkitEnterFullscreen === 'function') {
+        (video as any).webkitEnterFullscreen();
+        return;
+      }
+
+      // 2. Standard Fullscreen API (Android Chrome, iPad, Desktop)
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(() => {
+          if (typeof (video as any).webkitRequestFullscreen === 'function') {
+            (video as any).webkitRequestFullscreen();
+          }
+        });
+      } else if (typeof (video as any).webkitRequestFullscreen === 'function') {
+        (video as any).webkitRequestFullscreen();
+      } else if (typeof (video as any).mozRequestFullScreen === 'function') {
+        (video as any).mozRequestFullScreen();
+      } else if (typeof (video as any).msRequestFullscreen === 'function') {
+        (video as any).msRequestFullscreen();
+      }
+    } catch (err) {
+      console.warn('Fullscreen error:', err);
     }
   };
 
@@ -122,7 +175,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             loop
             muted={isVideoMuted}
             playsInline
-            className="w-full h-full object-cover"
+            // @ts-ignore
+            webkit-playsinline="true"
+            onPlay={() => setIsVideoPlaying(true)}
+            onPause={() => setIsVideoPlaying(false)}
+            onVolumeChange={() => {
+              if (videoRef.current) {
+                setIsVideoMuted(videoRef.current.muted);
+              }
+            }}
+            onClick={(e) => toggleVideoPlay(e)}
+            className="w-full h-full object-cover cursor-pointer"
           />
 
           {/* Top Video Status Pill */}
@@ -133,40 +196,49 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Bottom Floating Control Bar */}
-          <div className="absolute bottom-2.5 sm:bottom-4 left-2.5 sm:left-4 right-2.5 sm:right-4 flex justify-between items-center pointer-events-none">
-            <div className="flex items-center gap-2 pointer-events-auto">
+          <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-center pointer-events-none z-30">
+            <div className="flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
               {/* Play / Pause Button */}
               <button
-                onClick={toggleVideoPlay}
-                className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/95 hover:bg-white text-[#18070F] hover:text-[#D50032] border border-[#F9C2C2]/80 text-[11px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 sm:gap-2 backdrop-blur-md transition-all shadow-md cursor-pointer"
+                type="button"
+                onClick={(e) => toggleVideoPlay(e)}
+                onTouchEnd={(e) => toggleVideoPlay(e)}
+                className="no-drag min-h-[42px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-white/95 hover:bg-white active:scale-95 text-[#18070F] hover:text-[#D50032] border border-[#F9C2C2]/80 text-[11px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 sm:gap-2 backdrop-blur-md transition-all shadow-md cursor-pointer select-none"
+                style={{ touchAction: 'manipulation' }}
                 title={isVideoPlaying ? 'Pause Video' : 'Play Video'}
               >
-                {isVideoPlaying ? <Pause className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D50032]" /> : <Play className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#D50032]" />}
+                {isVideoPlaying ? <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D50032]" /> : <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D50032]" />}
                 <span>{isVideoPlaying ? 'PAUSE' : 'PLAY'}</span>
               </button>
 
               {/* Mute / Unmute Button */}
               <button
-                onClick={toggleVideoMute}
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border text-[11px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 sm:gap-2 backdrop-blur-md transition-all shadow-md cursor-pointer ${
+                type="button"
+                onClick={(e) => toggleVideoMute(e)}
+                onTouchEnd={(e) => toggleVideoMute(e)}
+                className={`no-drag min-h-[42px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border text-[11px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 sm:gap-2 backdrop-blur-md transition-all shadow-md active:scale-95 cursor-pointer select-none ${
                   isVideoMuted
                     ? 'bg-white/95 hover:bg-white text-[#18070F] border-[#F9C2C2]/80'
                     : 'bg-[#D50032] text-white border-[#D50032] shadow-[0_4px_20px_rgba(213,0,50,0.5)]'
                 }`}
+                style={{ touchAction: 'manipulation' }}
                 title={isVideoMuted ? 'Unmute Video Audio' : 'Mute Video Audio'}
               >
-                {isVideoMuted ? <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#A50034]" /> : <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />}
+                {isVideoMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#A50034]" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
                 <span>{isVideoMuted ? 'UNMUTE AUDIO' : 'AUDIO LIVE'}</span>
               </button>
             </div>
 
             <div className="flex items-center gap-2 pointer-events-auto">
               <button
-                onClick={handleFullscreen}
-                className="p-1.5 sm:p-2.5 rounded-full bg-white/90 hover:bg-white text-[#18070F] hover:text-[#D50032] border border-[#F9C2C2]/80 transition-all shadow-md cursor-pointer"
+                type="button"
+                onClick={(e) => handleFullscreen(e)}
+                onTouchEnd={(e) => handleFullscreen(e)}
+                className="no-drag min-w-[42px] min-h-[42px] p-2 sm:p-2.5 rounded-full bg-white/95 hover:bg-white active:scale-95 text-[#18070F] hover:text-[#D50032] border border-[#F9C2C2]/80 transition-all shadow-md cursor-pointer select-none flex items-center justify-center"
+                style={{ touchAction: 'manipulation' }}
                 title="Fullscreen"
               >
-                <Maximize2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <Maximize2 className="w-4 h-4 text-[#18070F]" />
               </button>
             </div>
           </div>
