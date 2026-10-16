@@ -90,11 +90,11 @@ export const CanvasStage: React.FC<CanvasStageProps> = ({
 
     // 5. Fine Line Style Geometric Wireframes (Zero Solid Shapes, Pure Elegant Lines)
     const geometricGroups: THREE.Group[] = [];
-    const sectionSpans = [0, 800, 1600, 2400, 3200];
+    const sectionSpans = [0, 800, 1600, 2400, 3200, 4000];
     const PHI = 1.6180339887; // The Golden Ratio
-    const baseScales = [1.65, 1.95, 2.3, 1.75, 2.05];
-    const yOffsets = [-15, 45, -45, 35, -10];
-    const zDepths = [-150, 30, -110, 60, -45];
+    const baseScales = [1.65, 1.95, 2.3, 1.75, 2.05, 1.85];
+    const yOffsets = [-15, 45, -45, 35, -10, 25];
+    const zDepths = [-150, 30, -110, 60, -45, 15];
 
     sectionSpans.forEach((xPos, idx) => {
       const group = new THREE.Group();

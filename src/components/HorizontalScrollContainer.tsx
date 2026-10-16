@@ -201,7 +201,7 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
       } else if (e.key === 'End') {
         e.preventDefault();
         scrollTargetX.current = maxScroll;
-      } else if (['1', '2', '3', '4', '5'].includes(e.key)) {
+      } else if (['1', '2', '3', '4', '5', '6'].includes(e.key)) {
         const idx = parseInt(e.key) - 1;
         if (idx < numSections) {
           scrollTargetX.current = idx * windowWidth;
@@ -239,14 +239,14 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
       </div>
 
       {/* Floating Bottom Navigator HUD */}
-      <div className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 max-w-4xl w-[94vw] sm:w-auto px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-full border border-[#F9C2C2]/80 bg-white/95 backdrop-blur-md shadow-2xl flex items-center justify-between gap-2 sm:gap-4">
+      <div className="fixed bottom-2 sm:bottom-3.5 left-1/2 -translate-x-1/2 z-40 max-w-5xl w-[95vw] sm:w-auto px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full border border-[#F9C2C2]/80 bg-white/95 backdrop-blur-md shadow-2xl flex items-center justify-between gap-1.5 sm:gap-3">
         {/* Navigation Section Pills */}
-        <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar mx-auto sm:mx-0">
+        <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar mx-auto sm:mx-0">
           {sections.map((sec, idx) => (
             <button
               key={sec.id}
               onClick={() => scrollToSection(idx)}
-              className={`px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-mono tracking-wider transition-all whitespace-nowrap cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] lg:text-[11px] font-mono tracking-wider transition-all whitespace-nowrap cursor-pointer ${
                 activeSectionIndex === idx
                   ? 'bg-gradient-to-r from-[#D50032] to-[#A50034] text-white font-bold shadow-md border border-[#FFB3BA]/40'
                   : 'text-[#3F353A] hover:text-[#D50032] hover:bg-[#FFB3BA]/20'
@@ -257,27 +257,31 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
           ))}
         </div>
 
-        {/* Action Pills: Hidden on narrow mobile, clean audio toggle */}
-        <div className="hidden sm:flex items-center gap-2 pl-2 border-l border-[#F9C2C2]/40 flex-shrink-0">
+        {/* Action Pills: Camera Optics, Parallax Slots, Audio Toggle */}
+        <div className="hidden sm:flex items-center gap-1.5 pl-2 border-l border-[#F9C2C2]/40 flex-shrink-0">
           <button
             onClick={onOpenCamControls}
-            className="p-2 rounded-full border border-[#F9C2C2]/70 hover:border-[#D50032] bg-[#F7F5F2] hover:bg-[#FFB3BA]/20 text-[#3F353A] hover:text-[#D50032] transition-all cursor-pointer shadow-xs"
+            className="px-2.5 py-1.5 rounded-full border border-[#F9C2C2]/70 hover:border-[#D50032] bg-[#F7F5F2] hover:bg-[#FFB3BA]/20 text-[#3F353A] hover:text-[#D50032] transition-all cursor-pointer shadow-xs flex items-center gap-1.5 text-[10px] font-mono"
             title="Open Camera Rig & Optics Director"
           >
-            <Camera className="w-3.5 h-3.5" />
+            <Camera className="w-3.5 h-3.5 text-[#D50032]" />
+            <span className="hidden xl:inline font-medium">
+              {cameraSettings.fov}mm • f/{cameraSettings.aperture.toFixed(1)}
+            </span>
           </button>
 
           <button
             onClick={onOpenMediaGuide}
-            className="p-2 rounded-full border border-[#F9C2C2]/70 hover:border-[#D50032] bg-[#F7F5F2] hover:bg-[#FFB3BA]/20 text-[#3F353A] hover:text-[#D50032] transition-all cursor-pointer shadow-xs"
+            className="px-2.5 py-1.5 rounded-full border border-[#F9C2C2]/70 hover:border-[#D50032] bg-[#F7F5F2] hover:bg-[#FFB3BA]/20 text-[#3F353A] hover:text-[#D50032] transition-all cursor-pointer shadow-xs flex items-center gap-1.5 text-[10px] font-mono"
             title="Open Parallax Media Studio (.png & .webm)"
           >
-            <Layers className="w-3.5 h-3.5" />
+            <Layers className="w-3.5 h-3.5 text-[#D50032]" />
+            <span className="hidden xl:inline font-medium">SLOTS</span>
           </button>
 
           <button
             onClick={onToggleAudio}
-            className={`p-2 rounded-full border transition-all cursor-pointer shadow-xs ${
+            className={`p-1.5 rounded-full border transition-all cursor-pointer shadow-xs ${
               audioActive
                 ? 'border-[#D50032] bg-[#D50032] text-white shadow-sm'
                 : 'border-[#F9C2C2]/70 bg-[#F7F5F2] text-[#3F353A] hover:text-[#D50032]'
@@ -289,24 +293,24 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
         </div>
       </div>
 
-      {/* Floating Next/Prev Arrow Gliders (Visible on desktop/tablet) */}
+      {/* Floating Next/Prev Arrow Gliders (Positioned at outer edges so they never cover content) */}
       {activeSectionIndex > 0 && (
         <button
           onClick={() => scrollToSection(activeSectionIndex - 1)}
-          className="hidden sm:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full border border-[#F9C2C2]/70 bg-white/90 hover:bg-white text-[#3F353A] hover:text-[#D50032] hover:border-[#D50032]/60 items-center justify-center backdrop-blur shadow-xl transition-all cursor-pointer"
+          className="hidden sm:flex fixed left-2 lg:left-3.5 top-1/2 -translate-y-1/2 z-40 w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-[#F9C2C2]/70 bg-white/90 hover:bg-white text-[#3F353A] hover:text-[#D50032] hover:border-[#D50032]/60 items-center justify-center backdrop-blur shadow-xl transition-all cursor-pointer"
           title="Glide Previous"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-4 h-4 lg:w-5 lg:h-5" />
         </button>
       )}
 
       {activeSectionIndex < numSections - 1 && (
         <button
           onClick={() => scrollToSection(activeSectionIndex + 1)}
-          className="hidden sm:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full border border-[#F9C2C2]/70 bg-white/90 hover:bg-white text-[#3F353A] hover:text-[#D50032] hover:border-[#D50032]/60 items-center justify-center backdrop-blur shadow-xl transition-all cursor-pointer"
+          className="hidden sm:flex fixed right-2 lg:right-3.5 top-1/2 -translate-y-1/2 z-40 w-9 h-9 lg:w-10 lg:h-10 rounded-full border border-[#F9C2C2]/70 bg-white/90 hover:bg-white text-[#3F353A] hover:text-[#D50032] hover:border-[#D50032]/60 items-center justify-center backdrop-blur shadow-xl transition-all cursor-pointer"
           title="Glide Next"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-4 h-4 lg:w-5 lg:h-5" />
         </button>
       )}
 

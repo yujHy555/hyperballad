@@ -19,12 +19,30 @@ export const INITIAL_PARALLAX_ITEMS: ParallaxMediaItem[] = [
     position: { xPercent: 88, yPercent: 62, scale: 1.1, zIndex: 30 }
   },
 
-  // SECTION 1: SESSION WORK & RECORDING — Chladni Sound Geometry
+  // SECTION 1: COLLABORATION — 3/5/11 Harmonic Convergence
+  {
+    id: 'collab-back-synergy',
+    type: 'html',
+    layer: 'back',
+    sectionIndex: 1,
+    title: '3/5/11 Tri-Modal Collaborative Resonance Rings',
+    position: { xPercent: 28, yPercent: 24, scale: 1.2, zIndex: 1 }
+  },
+  {
+    id: 'collab-front-nodes',
+    type: 'html',
+    layer: 'front',
+    sectionIndex: 1,
+    title: 'Audio-Visual Transient Sync Lattice',
+    position: { xPercent: 80, yPercent: 68, scale: 1.15, zIndex: 30 }
+  },
+
+  // SECTION 2: SESSION WORK & RECORDING — Chladni Sound Geometry
   {
     id: 'session-back-chladni',
     type: 'html',
     layer: 'back',
-    sectionIndex: 1,
+    sectionIndex: 2,
     title: 'Chladni Nodal Sound Geometry Plate',
     position: { xPercent: 26, yPercent: 22, scale: 1.15, zIndex: 1 }
   },
@@ -32,17 +50,17 @@ export const INITIAL_PARALLAX_ITEMS: ParallaxMediaItem[] = [
     id: 'session-front-sticks',
     type: 'html',
     layer: 'front',
-    sectionIndex: 1,
+    sectionIndex: 2,
     title: 'Acoustic Axis Strike Vectors',
     position: { xPercent: 78, yPercent: 70, scale: 1.15, zIndex: 30 }
   },
 
-  // SECTION 2: PERFORMANCE — Natural Wave Harmonics
+  // SECTION 3: PERFORMANCE — Natural Wave Harmonics
   {
     id: 'perf-back-waves',
     type: 'html',
     layer: 'back',
-    sectionIndex: 2,
+    sectionIndex: 3,
     title: 'Fibonacci Harmonic Standing Waves',
     position: { xPercent: 32, yPercent: 18, scale: 1.3, zIndex: 1 }
   },
@@ -50,17 +68,17 @@ export const INITIAL_PARALLAX_ITEMS: ParallaxMediaItem[] = [
     id: 'perf-front-cymbal-bloom',
     type: 'html',
     layer: 'front',
-    sectionIndex: 2,
+    sectionIndex: 3,
     title: 'Geometric Bronze Blossom Splash',
     position: { xPercent: 82, yPercent: 28, scale: 1.2, zIndex: 30 }
   },
 
-  // SECTION 3: BEAT CONSTRUCTION — Euclidean Geometry & Golden Angle
+  // SECTION 4: BEAT CONSTRUCTION — Euclidean Geometry & Golden Angle
   {
     id: 'beat-back-euclidean',
     type: 'html',
     layer: 'back',
-    sectionIndex: 3,
+    sectionIndex: 4,
     title: 'Flower of Life & Euclidean Matrix E(5, 12)',
     position: { xPercent: 22, yPercent: 25, scale: 1.1, zIndex: 1 }
   },
@@ -68,17 +86,17 @@ export const INITIAL_PARALLAX_ITEMS: ParallaxMediaItem[] = [
     id: 'beat-front-golden-angle',
     type: 'html',
     layer: 'front',
-    sectionIndex: 3,
+    sectionIndex: 4,
     title: 'Golden Angle 137.5° Micro-Timing Node',
     position: { xPercent: 75, yPercent: 68, scale: 1.1, zIndex: 30 }
   },
 
-  // SECTION 4: OUTRO — Sacred Geometry Seal
+  // SECTION 5: OUTRO — Sacred Geometry Seal
   {
     id: 'outro-back-monogram',
     type: 'html',
     layer: 'back',
-    sectionIndex: 4,
+    sectionIndex: 5,
     title: 'Vesica Piscis Harmonic Monogram',
     position: { xPercent: 55, yPercent: 22, scale: 1.35, zIndex: 1 }
   }

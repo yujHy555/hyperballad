@@ -126,6 +126,49 @@ export const ParallaxItemRenderer: React.FC<ParallaxItemRendererProps> = ({ item
         </div>
       );
 
+    // COLLABORATION — 3/5/11 Tri-Modal Harmonic Convergence Rings (Back layer)
+    case 'collab-back-synergy':
+      return (
+        <div className="relative w-[460px] h-[460px] sm:w-[600px] sm:h-[600px] md:w-[740px] md:h-[740px] lg:w-[860px] lg:h-[860px] select-none pointer-events-none">
+          <svg className="w-full h-full" viewBox="0 0 240 240" fill="none">
+            {/* Outer 11-Beat Harmonic Circle */}
+            <circle cx="120" cy="120" r="108" stroke="#D50032" strokeWidth="0.65" strokeOpacity="0.26" vectorEffect="non-scaling-stroke" />
+            {/* 3 Intersecting Borromean / Tri-Discipline Circles (Drums × Visuals × Musicians/DJs) */}
+            <circle cx="120" cy="86" r="56" stroke="#D50032" strokeWidth="0.7" strokeOpacity="0.42" vectorEffect="non-scaling-stroke" />
+            <circle cx="90" cy="138" r="56" stroke="#A50034" strokeWidth="0.7" strokeOpacity="0.38" vectorEffect="non-scaling-stroke" />
+            <circle cx="150" cy="138" r="56" stroke="#FFB3BA" strokeWidth="0.75" strokeOpacity="0.55" vectorEffect="non-scaling-stroke" />
+            {/* Inscribed 3/5/11 Triangle & Pentagram Nodes */}
+            <polygon points="120,30 198,165 42,165" stroke="#D50032" strokeWidth="0.6" strokeDasharray="3 2" strokeOpacity="0.35" vectorEffect="non-scaling-stroke" />
+            <circle cx="120" cy="120" r="14" stroke="#A50034" strokeWidth="0.75" strokeOpacity="0.55" vectorEffect="non-scaling-stroke" />
+          </svg>
+        </div>
+      );
+
+    // COLLABORATION — Audio-Visual Transient Sync Lattice (Foreground)
+    case 'collab-front-nodes':
+      return (
+        <div className="relative w-[380px] h-[380px] sm:w-[500px] sm:h-[500px] md:w-[620px] md:h-[620px] select-none pointer-events-none">
+          <svg className="w-full h-full" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="88" stroke="#D50032" strokeWidth="0.7" strokeOpacity="0.35" strokeDasharray="4 2" vectorEffect="non-scaling-stroke" />
+            <circle cx="100" cy="100" r="54" stroke="#FFB3BA" strokeWidth="0.65" strokeOpacity="0.5" vectorEffect="non-scaling-stroke" />
+            {[0, 32.72, 65.45, 98.18, 130.9, 163.63, 196.36, 229.09, 261.81, 294.54, 327.27].map((deg, idx) => (
+              <line
+                key={idx}
+                x1="100"
+                y1="12"
+                x2="100"
+                y2="46"
+                stroke={idx % 2 === 0 ? '#D50032' : '#A50034'}
+                strokeWidth="0.7"
+                strokeOpacity="0.45"
+                transform={`rotate(${deg} 100 100)`}
+                vectorEffect="non-scaling-stroke"
+              />
+            ))}
+          </svg>
+        </div>
+      );
+
     // SESSION — Chladni Sound Frequency Nodal Plate (Back layer)
     case 'session-back-chladni':
       return (

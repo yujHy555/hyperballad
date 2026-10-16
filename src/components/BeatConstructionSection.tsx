@@ -161,19 +161,19 @@ export const BeatConstructionSection: React.FC = () => {
   };
 
   return (
-    <div className="relative w-screen h-[100dvh] flex-shrink-0 flex flex-col justify-between p-4 sm:p-8 md:p-12 select-none overflow-y-auto no-scrollbar">
+    <div className="relative w-screen h-[100dvh] flex-shrink-0 flex flex-col justify-between pt-3 sm:pt-5 md:pt-7 pb-16 sm:pb-20 px-4 sm:px-10 md:px-14 lg:px-20 select-none overflow-y-auto no-scrollbar">
       {/* Background Section Accent with Crimson Glow */}
       <div className="absolute right-1/4 bottom-1/4 w-96 h-96 rounded-full bg-[#D50032]/5 blur-3xl pointer-events-none" />
 
       {/* Top Header */}
-      <div className="relative z-20 flex justify-between items-start w-full max-w-7xl mx-auto mb-2 sm:mb-4">
+      <div className="relative z-20 flex justify-between items-center w-full max-w-7xl mx-auto">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-[#D50032]/40 flex items-center justify-center bg-white shadow-xs">
-            <span className="font-mono text-xs text-[#D50032] font-bold">03</span>
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#D50032]/40 flex items-center justify-center bg-white shadow-xs">
+            <span className="font-mono text-[11px] sm:text-xs text-[#D50032] font-bold">04</span>
           </div>
           <div>
-            <span className="font-mono tracking-[0.22em] sm:tracking-[0.28em] text-[10px] sm:text-xs text-[#A50034] font-semibold uppercase block">
-              Pattern Architecture
+            <span className="font-mono tracking-[0.2em] sm:tracking-[0.26em] text-[10px] sm:text-[11px] text-[#A50034] font-semibold uppercase block">
+              Discipline 04 • Pattern Architecture
             </span>
             <span className="font-['Cinzel'] text-xs sm:text-sm tracking-wider text-[#18070F] font-semibold">
               BEAT CONSTRUCTION // EUCLIDEAN & PHYLLOTAXIS
@@ -181,21 +181,21 @@ export const BeatConstructionSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center gap-2 sm:gap-3 px-3 py-1 rounded-full border border-[#F9C2C2]/60 bg-white/90 text-[10px] sm:text-[11px] font-mono text-[#A50034] shadow-xs">
+        <div className="hidden md:flex items-center gap-2.5 px-3 py-1 rounded-full border border-[#F9C2C2]/60 bg-white/90 text-[10px] lg:text-[11px] font-mono text-[#A50034] shadow-xs">
           <Shapes className="w-3.5 h-3.5 text-[#D50032]" />
           <span>EUCLIDEAN E(5, 16) • θ = 137.5°</span>
         </div>
       </div>
 
       {/* Main Content Area: Responsive Grid */}
-      <div className="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 my-auto items-center w-full max-w-7xl mx-auto">
+      <div className="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 my-auto items-center w-full max-w-7xl mx-auto py-1 sm:py-2">
         {/* Left Column: Narrative (HIDDEN on mobile to simplify greatly!) */}
-        <div className="hidden lg:block lg:col-span-5 space-y-4">
-          <div className="inline-block px-3 py-1 rounded-full text-[10px] font-mono tracking-widest text-[#D50032] bg-[#FFB3BA]/25 border border-[#D50032]/30 uppercase font-semibold">
+        <div className="hidden lg:block lg:col-span-5 space-y-3 sm:space-y-4">
+          <div className="inline-block px-3 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono tracking-widest text-[#D50032] bg-[#FFB3BA]/25 border border-[#D50032]/30 uppercase font-semibold">
             Patterns of Groove & Natural Growth
           </div>
 
-          <h2 className="font-['Instrument_Serif'] text-4xl sm:text-5xl text-[#18070F] leading-[0.95]">
+          <h2 className="font-['Instrument_Serif'] text-3xl sm:text-4xl md:text-5xl xl:text-[3.4rem] text-[#18070F] leading-[0.95]">
             Euclidean matrices & <br />
             <span className="italic text-[#D50032]">golden ratio patterns</span>
           </h2>
@@ -204,15 +204,15 @@ export const BeatConstructionSection: React.FC = () => {
             Beat construction translates nature's generative growth patterns into time. Using Euclidean spacing, Fibonacci metric modulations, and human micro-delays modeled after sunflower phyllotaxis, rhythms breathe with geometric pattern precision and organic soul.
           </p>
 
-          <div className="grid grid-cols-2 gap-3 pt-1">
-            <div className="p-3 rounded-xl border border-[#F9C2C2]/60 bg-white shadow-xs">
-              <div className="text-[10px] font-mono text-[#D50032] uppercase font-bold">Euclidean Pulses</div>
-              <div className="text-[#18070F] text-xs font-bold mt-0.5">E(5, 12) & E(7, 16)</div>
+          <div className="grid grid-cols-2 gap-2.5 pt-1">
+            <div className="p-2.5 sm:p-3 rounded-xl border border-[#F9C2C2]/60 bg-white shadow-2xs">
+              <div className="text-[9px] sm:text-[10px] font-mono text-[#D50032] uppercase font-bold">Euclidean Pulses</div>
+              <div className="text-[#18070F] text-[11px] sm:text-xs font-bold mt-0.5">E(5, 12) & E(7, 16)</div>
               <div className="text-[#7A6E74] text-[10px] mt-0.5">Even distribution across circles</div>
             </div>
-            <div className="p-3 rounded-xl border border-[#F9C2C2]/60 bg-white shadow-xs">
-              <div className="text-[10px] font-mono text-[#A50034] uppercase font-bold">Micro-Timing Offset</div>
-              <div className="text-[#18070F] text-xs font-bold mt-0.5">-18.4ms Botanical Drag</div>
+            <div className="p-2.5 sm:p-3 rounded-xl border border-[#F9C2C2]/60 bg-white shadow-2xs">
+              <div className="text-[9px] sm:text-[10px] font-mono text-[#A50034] uppercase font-bold">Micro-Timing Offset</div>
+              <div className="text-[#18070F] text-[11px] sm:text-xs font-bold mt-0.5">-18.4ms Botanical Drag</div>
               <div className="text-[#7A6E74] text-[10px] mt-0.5">Unquantized organic swing feel</div>
             </div>
           </div>
@@ -220,12 +220,12 @@ export const BeatConstructionSection: React.FC = () => {
 
         {/* Right Column: Full Interactive Beat Matrix (Takes 100% width on Mobile!) */}
         <div className="col-span-1 lg:col-span-7 w-full">
-          <div className="p-3.5 sm:p-5 md:p-6 rounded-2xl border border-[#F9C2C2]/70 bg-white shadow-xl space-y-3 sm:space-y-4">
+          <div className="p-3.5 sm:p-5 rounded-2xl border border-[#F9C2C2]/70 bg-white shadow-xl space-y-2.5 sm:space-y-3">
             {/* Top Toolbar */}
-            <div className="flex flex-wrap justify-between items-center pb-2.5 sm:pb-3 border-b border-[#F9C2C2]/30 gap-2">
+            <div className="flex flex-wrap justify-between items-center pb-2 border-b border-[#F9C2C2]/30 gap-2">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D50032]" />
-                <span className="text-[11px] sm:text-xs font-mono font-semibold tracking-wider text-[#18070F] uppercase">
+                <span className="text-[10px] sm:text-xs font-mono font-semibold tracking-wider text-[#18070F] uppercase">
                   Beat Matrix Synthesizer
                 </span>
               </div>
@@ -254,7 +254,7 @@ export const BeatConstructionSection: React.FC = () => {
                 {/* Master Start / Pause Clock Button */}
                 <button
                   onClick={handleTogglePlay}
-                  className={`px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-mono border transition-all cursor-pointer shadow-md flex items-center gap-1.5 sm:gap-2 ${
+                  className={`px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-mono border transition-all cursor-pointer shadow-md flex items-center gap-1.5 ${
                     isPlaying
                       ? 'bg-[#D50032] text-white border-[#D50032] shadow-[0_0_15px_rgba(213,0,50,0.5)]'
                       : 'bg-white text-[#D50032] border-[#D50032] hover:bg-[#D50032] hover:text-white'
@@ -272,7 +272,7 @@ export const BeatConstructionSection: React.FC = () => {
                 <button
                   key={idx}
                   onClick={() => selectPreset(idx)}
-                  className={`p-2 sm:p-2.5 rounded-xl text-left transition-all border cursor-pointer ${
+                  className={`p-2 rounded-xl text-left transition-all border cursor-pointer ${
                     activePresetIndex === idx
                       ? 'border-[#D50032] bg-[#D50032] text-white shadow-md'
                       : 'border-[#F9C2C2]/50 bg-[#F7F5F2] text-[#3F353A] hover:border-[#D50032]/40 hover:bg-white'
@@ -287,7 +287,7 @@ export const BeatConstructionSection: React.FC = () => {
             </div>
 
             {/* Interactive Step Matrix */}
-            <div className="p-2.5 sm:p-4 rounded-xl border border-[#F9C2C2]/50 bg-[#F7F5F2] space-y-2 sm:space-y-3">
+            <div className="p-2.5 sm:p-3.5 rounded-xl border border-[#F9C2C2]/50 bg-[#F7F5F2] space-y-2 sm:space-y-2.5">
               <div className="text-[10px] sm:text-xs font-mono text-[#7A6E74] flex justify-between items-center">
                 <span className="truncate max-w-[200px] sm:max-w-md">{PRESET_PATTERNS[activePresetIndex].description}</span>
                 <span className="text-[#D50032] font-bold text-[10px] sm:text-xs bg-white px-2 py-0.5 rounded border border-[#F9C2C2]/60 whitespace-nowrap">
@@ -325,7 +325,7 @@ export const BeatConstructionSection: React.FC = () => {
                         <button
                           key={stepIdx}
                           onClick={() => toggleStep(trkIdx, stepIdx)}
-                          className={`h-6 sm:h-7 rounded-xs sm:rounded-sm transition-all border cursor-pointer relative ${
+                          className={`h-5 sm:h-6 rounded-xs sm:rounded-sm transition-all border cursor-pointer relative ${
                             isActive
                               ? isCurrent
                                 ? 'bg-[#D50032] border-[#D50032] scale-110 shadow-[0_0_12px_rgba(213,0,50,0.8)] z-10'
@@ -351,7 +351,7 @@ export const BeatConstructionSection: React.FC = () => {
               ))}
 
               {/* Swing & Tempo Controls */}
-              <div className="pt-2 sm:pt-3 border-t border-[#F9C2C2]/40 flex flex-wrap items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono text-[#3F353A]">
+              <div className="pt-2 border-t border-[#F9C2C2]/40 flex flex-wrap items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono text-[#3F353A]">
                 {/* Swing Slider */}
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <span>SWING: <strong className="text-[#A50034]">{swingAmount}%</strong></span>
@@ -384,9 +384,9 @@ export const BeatConstructionSection: React.FC = () => {
       </div>
 
       {/* Footer Specs Row */}
-      <div className="relative z-20 flex justify-between items-center pt-2 sm:pt-3 border-t border-[#F9C2C2]/30 text-[10px] sm:text-[11px] font-mono text-[#7A6E74] w-full max-w-7xl mx-auto mt-2">
+      <div className="relative z-20 flex justify-between items-center pt-2 sm:pt-3 border-t border-[#F9C2C2]/30 text-[10px] sm:text-[11px] font-mono text-[#7A6E74] w-full max-w-7xl mx-auto">
         <div className="flex items-center gap-2 sm:gap-4">
-          <span>DISCIPLINE 03</span>
+          <span>04 / 04 DISCIPLINES</span>
           <span>•</span>
           <span>BEAT CONSTRUCTION</span>
         </div>

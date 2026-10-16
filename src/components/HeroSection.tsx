@@ -107,36 +107,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   return (
-    <div className="relative w-screen h-[100dvh] flex-shrink-0 flex flex-col justify-between p-4 sm:p-8 md:p-12 select-none overflow-y-auto no-scrollbar">
+    <div className="relative w-screen h-[100dvh] flex-shrink-0 flex flex-col justify-between pt-3 sm:pt-5 md:pt-7 pb-16 sm:pb-20 px-4 sm:px-10 md:px-14 lg:px-20 select-none overflow-y-auto no-scrollbar">
       {/* Soft Ambient Vignette */}
       <div className="absolute inset-0 bg-radial from-transparent via-[#F7F6F3]/40 to-[#F7F6F3] pointer-events-none" />
 
       {/* Top Header Row */}
-      <div className="relative z-20 flex justify-between items-center w-full max-w-7xl mx-auto mb-2 sm:mb-4">
-        <div className="flex items-center gap-2.5 sm:gap-3.5">
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#D50032]/40 flex items-center justify-center bg-white shadow-xs">
-            <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#D50032]" />
+      <div className="relative z-20 flex justify-between items-center w-full max-w-7xl mx-auto">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#D50032]/40 flex items-center justify-center bg-white shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-[#D50032]" />
           </div>
           <div>
-            <span className="font-['Cinzel'] tracking-[0.22em] sm:tracking-[0.28em] text-[10px] sm:text-xs text-[#A50034] font-bold uppercase block">
-              The Geometry of Rhythm
+            <span className="font-['Cinzel'] tracking-[0.2em] sm:tracking-[0.26em] text-[10px] sm:text-xs text-[#A50034] font-bold uppercase block">
+              The Geometry of Rhythm // Rory Mayne
             </span>
-            <span className="text-[10px] sm:text-[11px] font-mono text-[#7A6E74] tracking-wider hidden sm:inline">
-              PATTERNS • NATURE • JAZZ PERCUSSION
+            <span className="text-[9px] sm:text-[10px] font-mono text-[#7A6E74] tracking-wider hidden sm:inline">
+              PATTERNS • NATURE • LIVE COLLABORATION • JAZZ PERCUSSION
             </span>
           </div>
         </div>
 
         {/* Audio Toggle & Formula Pill */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#F9C2C2]/70 bg-white/90 text-[11px] font-mono text-[#A50034] shadow-xs">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full border border-[#F9C2C2]/70 bg-white/90 text-[10px] xl:text-[11px] font-mono text-[#A50034] shadow-xs">
             <Sparkles className="w-3 h-3 text-[#D50032]" />
             <span>φ = 1.6180339 • GOLDEN ANGLE 137.5°</span>
           </div>
 
           <button
             onClick={onToggleAudio}
-            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border text-[11px] sm:text-xs font-mono tracking-wider flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer shadow-xs ${
+            className={`px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full border text-[10px] sm:text-xs font-mono tracking-wider flex items-center gap-1.5 transition-all cursor-pointer shadow-xs ${
               audioActive
                 ? 'bg-[#D50032] border-[#D50032] text-white shadow-[0_4px_15px_rgba(213,0,50,0.35)]'
                 : 'bg-white border-[#F9C2C2]/80 text-[#3F353A] hover:border-[#D50032] hover:text-[#D50032]'
@@ -148,26 +148,34 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
       </div>
 
-      {/* Main Center Hero Block with 1280x720 Rounded Video */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto my-auto flex flex-col items-center">
+      {/* Main Center Hero Block with Adaptive Rounded Video */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto my-auto flex flex-col items-center py-1 sm:py-2">
         {/* Title Row */}
-        <div className="w-full flex flex-col mb-3 sm:mb-5 md:mb-6">
-          <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1 sm:mb-2">
+        <div className="w-full flex flex-col mb-2 sm:mb-3">
+          <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-1">
             <span className="px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono tracking-widest text-[#D50032] bg-[#FFB3BA]/30 border border-[#D50032]/30 uppercase font-semibold self-start">
-              Nature × Geometry • Patterns × Beauty
+              Nature × Geometry • Patterns × Live Collaboration
             </span>
-            <p className="hidden md:block text-xs sm:text-sm text-[#4A4347] max-w-lg font-['Plus_Jakarta_Sans'] font-normal leading-relaxed text-right">
-              Where logarithmic phyllotaxis meets jazz drumming pocket. Acoustic resonance, unscripted live dynamics & polyrhythmic patterns.
+            <p className="hidden md:block text-[11px] lg:text-xs text-[#4A4347] max-w-lg font-['Plus_Jakarta_Sans'] font-normal leading-snug text-right">
+              Where logarithmic phyllotaxis meets Rory Mayne’s live drumming pocket—uniting visual artists, musicians, DJs & regular guests.
             </p>
           </div>
 
-          <h1 className="font-['Instrument_Serif'] text-5xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[8.5rem] tracking-tight leading-[0.96] pb-1 sm:pb-2 text-[#18070F] w-full select-none">
-            hyper<span className="italic font-normal text-[#D50032]">ballad</span>
+          <h1
+            className="font-['Instrument_Serif'] tracking-tight leading-[0.92] pb-0.5 text-[#18070F] w-full select-none flex items-baseline gap-2 sm:gap-3 flex-wrap"
+            style={{ fontSize: 'clamp(2.6rem, 5.8vh + 1.4rem, 6.5rem)' }}
+          >
+            <span>
+              hyper<span className="italic font-normal text-[#D50032]">ballad</span>
+            </span>
+            <span className="font-mono text-[10px] sm:text-xs md:text-sm tracking-[0.18em] text-[#A50034] font-semibold not-italic">
+              3/5/11
+            </span>
           </h1>
         </div>
 
-        {/* 1280x720 Rounded Video Player (Adaptive for Portrait & Landscape) */}
-        <div className="relative w-full max-w-[1280px] aspect-[16/9] max-h-[34vh] sm:max-h-[40vh] md:max-h-[46vh] rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-[#F9C2C2]/70 shadow-[0_20px_50px_rgba(165,0,52,0.12),0_4px_25px_rgba(0,0,0,0.06)] bg-black group">
+        {/* 1280x720 Rounded Video Player (Adaptive to Viewport Height & Width) */}
+        <div className="relative w-full max-w-[1160px] aspect-[16/9] max-h-[27vh] sm:max-h-[32vh] md:max-h-[35vh] lg:max-h-[37vh] 2xl:max-h-[43vh] rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-[#F9C2C2]/70 shadow-[0_16px_40px_rgba(165,0,52,0.12),0_4px_20px_rgba(0,0,0,0.06)] bg-black group">
           <video
             ref={videoRef}
             src="/videos/hb_05_1.mp4"
@@ -189,25 +197,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           />
 
           {/* Top Video Status Pill */}
-          <div className="absolute top-2.5 sm:top-4 left-2.5 sm:left-4 bg-white/90 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[#F9C2C2]/80 text-[10px] sm:text-[11px] font-mono text-[#18070F] flex items-center gap-1.5 sm:gap-2 shadow-md pointer-events-none">
+          <div className="absolute top-2.5 sm:top-3.5 left-2.5 sm:left-3.5 bg-white/90 backdrop-blur-md px-2.5 sm:px-3 py-1 rounded-full border border-[#F9C2C2]/80 text-[9px] sm:text-[10px] font-mono text-[#18070F] flex items-center gap-1.5 shadow-md pointer-events-none">
             <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#D50032]" />
-            <span className="font-bold text-[#A50034]">LIVE DRUMMING</span>
-            <span className="text-[#7A6E74] hidden sm:inline">• 1280×720</span>
+            <span className="font-bold text-[#A50034]">RORY MAYNE LIVE DRUMMING</span>
+            <span className="text-[#7A6E74] hidden sm:inline">• 3/5/11</span>
           </div>
 
           {/* Bottom Floating Control Bar */}
-          <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-center pointer-events-none z-30">
+          <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3.5 right-2 sm:right-3.5 flex justify-between items-center pointer-events-none z-30">
             <div className="flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
               {/* Play / Pause Button */}
               <button
                 type="button"
                 onClick={(e) => toggleVideoPlay(e)}
                 onTouchEnd={(e) => toggleVideoPlay(e)}
-                className="no-drag min-h-[42px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full bg-white/95 hover:bg-white active:scale-95 text-[#18070F] hover:text-[#D50032] border border-[#F9C2C2]/80 text-[11px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 sm:gap-2 backdrop-blur-md transition-all shadow-md cursor-pointer select-none"
+                className="no-drag min-h-[36px] sm:min-h-[38px] px-3 sm:px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white active:scale-95 text-[#18070F] hover:text-[#D50032] border border-[#F9C2C2]/80 text-[10px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 backdrop-blur-md transition-all shadow-md cursor-pointer select-none"
                 style={{ touchAction: 'manipulation' }}
                 title={isVideoPlaying ? 'Pause Video' : 'Play Video'}
               >
-                {isVideoPlaying ? <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D50032]" /> : <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D50032]" />}
+                {isVideoPlaying ? <Pause className="w-3.5 h-3.5 text-[#D50032]" /> : <Play className="w-3.5 h-3.5 text-[#D50032]" />}
                 <span>{isVideoPlaying ? 'PAUSE' : 'PLAY'}</span>
               </button>
 
@@ -216,7 +224,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 type="button"
                 onClick={(e) => toggleVideoMute(e)}
                 onTouchEnd={(e) => toggleVideoMute(e)}
-                className={`no-drag min-h-[42px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full border text-[11px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 sm:gap-2 backdrop-blur-md transition-all shadow-md active:scale-95 cursor-pointer select-none ${
+                className={`no-drag min-h-[36px] sm:min-h-[38px] px-3 sm:px-3.5 py-1.5 rounded-full border text-[10px] sm:text-xs font-mono font-semibold tracking-wider flex items-center gap-1.5 backdrop-blur-md transition-all shadow-md active:scale-95 cursor-pointer select-none ${
                   isVideoMuted
                     ? 'bg-white/95 hover:bg-white text-[#18070F] border-[#F9C2C2]/80'
                     : 'bg-[#D50032] text-white border-[#D50032] shadow-[0_4px_20px_rgba(213,0,50,0.5)]'
@@ -224,7 +232,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 style={{ touchAction: 'manipulation' }}
                 title={isVideoMuted ? 'Unmute Video Audio' : 'Mute Video Audio'}
               >
-                {isVideoMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#A50034]" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />}
+                {isVideoMuted ? <VolumeX className="w-3.5 h-3.5 text-[#A50034]" /> : <Volume2 className="w-3.5 h-3.5 text-white" />}
                 <span>{isVideoMuted ? 'UNMUTE AUDIO' : 'AUDIO LIVE'}</span>
               </button>
             </div>
@@ -234,62 +242,70 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 type="button"
                 onClick={(e) => handleFullscreen(e)}
                 onTouchEnd={(e) => handleFullscreen(e)}
-                className="no-drag min-w-[42px] min-h-[42px] p-2 sm:p-2.5 rounded-full bg-white/95 hover:bg-white active:scale-95 text-[#18070F] hover:text-[#D50032] border border-[#F9C2C2]/80 transition-all shadow-md cursor-pointer select-none flex items-center justify-center"
+                className="no-drag min-w-[36px] min-h-[36px] sm:min-w-[38px] sm:min-h-[38px] p-2 rounded-full bg-white/95 hover:bg-white active:scale-95 text-[#18070F] hover:text-[#D50032] border border-[#F9C2C2]/80 transition-all shadow-md cursor-pointer select-none flex items-center justify-center"
                 style={{ touchAction: 'manipulation' }}
                 title="Fullscreen"
               >
-                <Maximize2 className="w-4 h-4 text-[#18070F]" />
+                <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#18070F]" />
               </button>
             </div>
           </div>
         </div>
 
-        {/* Quick Discipline Anchors Row — HIDDEN on mobile to simplify */}
-        <div className="hidden md:grid w-full grid-cols-3 gap-3 mt-4">
-          <div className="p-3 rounded-2xl border border-[#F9C2C2]/60 bg-white/85 backdrop-blur-sm shadow-xs flex items-center justify-between">
-            <div>
-              <span className="text-[10px] font-mono text-[#D50032] uppercase font-bold tracking-wider block">01 / RECORDING</span>
-              <span className="text-xs font-semibold text-[#18070F]">Chladni Sound Harmonics</span>
+        {/* Quick Discipline Anchors Row — 4 Disciplines on Desktop */}
+        <div className="hidden md:grid w-full grid-cols-4 gap-2.5 mt-2.5">
+          <div className="p-2.5 rounded-xl border border-[#F9C2C2]/60 bg-white/85 backdrop-blur-sm shadow-2xs flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <span className="text-[9px] lg:text-[10px] font-mono text-[#D50032] uppercase font-bold tracking-wider block truncate">01 / COLLABORATION</span>
+              <span className="text-[11px] lg:text-xs font-semibold text-[#18070F] block truncate">Rory Mayne × Live Guests</span>
             </div>
-            <span className="text-[10px] font-mono text-[#7A6E74]">24-Track Tape</span>
+            <span className="text-[9px] font-mono text-[#7A6E74] whitespace-nowrap">Visuals • DJs</span>
           </div>
 
-          <div className="p-3 rounded-2xl border border-[#F9C2C2]/60 bg-white/85 backdrop-blur-sm shadow-xs flex items-center justify-between">
-            <div>
-              <span className="text-[10px] font-mono text-[#A50034] uppercase font-bold tracking-wider block">02 / PERFORMANCE</span>
-              <span className="text-xs font-semibold text-[#18070F]">Organic Kinetic Tides</span>
+          <div className="p-2.5 rounded-xl border border-[#F9C2C2]/60 bg-white/85 backdrop-blur-sm shadow-2xs flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <span className="text-[9px] lg:text-[10px] font-mono text-[#A50034] uppercase font-bold tracking-wider block truncate">02 / RECORDING</span>
+              <span className="text-[11px] lg:text-xs font-semibold text-[#18070F] block truncate">Chladni Sound Harmonics</span>
             </div>
-            <span className="text-[10px] font-mono text-[#7A6E74]">ppp to fff</span>
+            <span className="text-[9px] font-mono text-[#7A6E74] whitespace-nowrap">24-Track Tape</span>
           </div>
 
-          <div className="p-3 rounded-2xl border border-[#F9C2C2]/60 bg-white/85 backdrop-blur-sm shadow-xs flex items-center justify-between">
-            <div>
-              <span className="text-[10px] font-mono text-[#D50032] uppercase font-bold tracking-wider block">03 / BEAT MATRIX</span>
-              <span className="text-xs font-semibold text-[#18070F]">Euclidean & Phyllotaxis</span>
+          <div className="p-2.5 rounded-xl border border-[#F9C2C2]/60 bg-white/85 backdrop-blur-sm shadow-2xs flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <span className="text-[9px] lg:text-[10px] font-mono text-[#D50032] uppercase font-bold tracking-wider block truncate">03 / PERFORMANCE</span>
+              <span className="text-[11px] lg:text-xs font-semibold text-[#18070F] block truncate">Organic Kinetic Tides</span>
             </div>
-            <span className="text-[10px] font-mono text-[#7A6E74]">Golden Angle θ</span>
+            <span className="text-[9px] font-mono text-[#7A6E74] whitespace-nowrap">ppp to fff</span>
+          </div>
+
+          <div className="p-2.5 rounded-xl border border-[#F9C2C2]/60 bg-white/85 backdrop-blur-sm shadow-2xs flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <span className="text-[9px] lg:text-[10px] font-mono text-[#A50034] uppercase font-bold tracking-wider block truncate">04 / BEAT MATRIX</span>
+              <span className="text-[11px] lg:text-xs font-semibold text-[#18070F] block truncate">Euclidean & Phyllotaxis</span>
+            </div>
+            <span className="text-[9px] font-mono text-[#7A6E74] whitespace-nowrap">Golden Angle θ</span>
           </div>
         </div>
       </div>
 
       {/* Bottom Row / Scroll Hint */}
-      <div className="relative z-20 flex justify-between items-center pt-2 sm:pt-4 border-t border-[#F9C2C2]/40 w-full max-w-7xl mx-auto mt-2">
-        <div className="flex items-center gap-3 sm:gap-6">
+      <div className="relative z-20 flex justify-between items-center pt-2 border-t border-[#F9C2C2]/40 w-full max-w-7xl mx-auto">
+        <div className="flex items-center gap-3 sm:gap-5">
           <button
             onClick={onExplore}
-            className="group px-5 sm:px-7 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#D50032] to-[#A50034] text-white font-semibold text-[11px] sm:text-xs tracking-wider uppercase flex items-center gap-2 transition-transform hover:scale-105 active:scale-95 shadow-md cursor-pointer border border-[#FFB3BA]/40"
+            className="group px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#D50032] to-[#A50034] text-white font-semibold text-[10px] sm:text-xs tracking-wider uppercase flex items-center gap-2 transition-transform hover:scale-105 active:scale-95 shadow-md cursor-pointer border border-[#FFB3BA]/40"
           >
-            <span>{isMobile ? 'TO BEAT MATRIX' : 'EXPLORE DISCIPLINES'}</span>
+            <span>{isMobile ? 'EXPLORE COLLABORATIONS' : 'EXPLORE COLLABORATIONS'}</span>
             <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
           </button>
 
-          <div className="hidden md:flex items-center gap-2 text-xs font-mono text-[#7A6E74]">
+          <div className="hidden md:flex items-center gap-2 text-[11px] font-mono text-[#7A6E74]">
             <span>SWIPE OR GLIDE TO SCROLL</span>
           </div>
         </div>
 
         {/* Tempo and Metric Signature */}
-        <div className="flex items-center gap-3 sm:gap-6 font-mono text-[10px] sm:text-xs text-[#7A6E74]">
+        <div className="flex items-center gap-2.5 sm:gap-5 font-mono text-[10px] sm:text-xs text-[#7A6E74]">
           <div className="flex items-center gap-1.5">
             <Disc className="w-3 h-3 text-[#D50032]" />
             <span className="text-[#18070F] font-semibold">132 BPM</span>
@@ -297,7 +313,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <span className="text-[#F9C2C2]">•</span>
           <div className="flex items-center gap-1.5">
             <Activity className="w-3 h-3 text-[#A50034]" />
-            <span className="text-[#18070F] font-semibold">7/4 TENSION</span>
+            <span className="text-[#18070F] font-semibold">3/5/11 METER</span>
           </div>
         </div>
       </div>

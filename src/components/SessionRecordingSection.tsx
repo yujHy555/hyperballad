@@ -33,99 +33,99 @@ export const SessionRecordingSection: React.FC = () => {
   };
 
   return (
-    <div className="relative w-screen h-screen flex-shrink-0 flex flex-col justify-between p-8 md:p-16 select-none overflow-hidden">
+    <div className="relative w-screen h-[100dvh] flex-shrink-0 flex flex-col justify-between pt-3 sm:pt-5 md:pt-7 pb-16 sm:pb-20 px-4 sm:px-10 md:px-14 lg:px-20 select-none overflow-y-auto no-scrollbar">
       {/* Background Section Accent */}
       <div className="absolute -right-20 top-1/4 w-96 h-96 rounded-full bg-[#D50032]/5 blur-3xl pointer-events-none" />
 
       {/* Top Header */}
-      <div className="relative z-20 flex justify-between items-start">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-full border border-[#D50032]/40 flex items-center justify-center bg-white shadow-[0_4px_15px_rgba(213,0,50,0.15)]">
-            <span className="font-mono text-xs text-[#D50032] font-bold">01</span>
+      <div className="relative z-20 flex justify-between items-center w-full max-w-7xl mx-auto">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-[#D50032]/40 flex items-center justify-center bg-white shadow-[0_4px_15px_rgba(213,0,50,0.15)]">
+            <span className="font-mono text-[11px] sm:text-xs text-[#D50032] font-bold">02</span>
           </div>
           <div>
-            <span className="font-mono tracking-[0.28em] text-xs text-[#A50034] font-semibold uppercase block">
-              Discipline 01
+            <span className="font-mono tracking-[0.2em] sm:tracking-[0.26em] text-[10px] sm:text-[11px] text-[#A50034] font-semibold uppercase block">
+              Discipline 02
             </span>
-            <span className="font-['Cinzel'] text-sm tracking-wider text-[#18070F] font-semibold">
+            <span className="font-['Cinzel'] text-xs sm:text-sm tracking-wider text-[#18070F] font-semibold">
               SESSION WORK & RECORDING // CHLADNI HARMONICS
             </span>
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center gap-3 px-3.5 py-1.5 rounded-full border border-[#F9C2C2]/60 bg-white/90 text-[11px] font-mono text-[#A50034] shadow-xs">
+        <div className="hidden md:flex items-center gap-2.5 px-3 py-1 rounded-full border border-[#F9C2C2]/60 bg-white/90 text-[10px] lg:text-[11px] font-mono text-[#A50034] shadow-xs">
           <Radio className="w-3.5 h-3.5 text-[#D50032]" />
           <span>STUDER A800 24-TRACK // ANALOG SATURATION 15 IPS</span>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-8 my-auto items-center">
+      <div className="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 my-auto items-center w-full max-w-7xl mx-auto py-1 sm:py-2">
         {/* Left Column: Narrative & Mathematical Philosophy */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="inline-block px-3.5 py-1 rounded-full text-[10px] font-mono tracking-widest text-[#D50032] bg-[#FFB3BA]/25 border border-[#D50032]/30 uppercase font-semibold">
+        <div className="lg:col-span-5 space-y-3 sm:space-y-4">
+          <div className="inline-block px-3 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono tracking-widest text-[#D50032] bg-[#FFB3BA]/25 border border-[#D50032]/30 uppercase font-semibold">
             Acoustic Physics & Natural Wood Grain
           </div>
 
-          <h2 className="font-['Instrument_Serif'] text-5xl sm:text-6xl text-[#18070F] leading-[0.95]">
+          <h2 className="font-['Instrument_Serif'] text-3xl sm:text-4xl md:text-5xl xl:text-[3.4rem] text-[#18070F] leading-[0.95]">
             Nodal physics, pocket & <br />
             <span className="italic text-[#D50032]">analog resonance</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-[#3F353A] leading-relaxed font-['Plus_Jakarta_Sans'] font-normal">
+          <p className="text-xs sm:text-sm text-[#3F353A] leading-relaxed font-['Plus_Jakarta_Sans'] font-normal">
             In recording sessions, sound is natural geometry and pattern made audible. Each drum head vibrates according to Chladni nodal plate geometries, captured through figure-8 ribbon physics and vintage cross-laminated Michigan maple shells with locked micro-timing.
           </p>
 
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <div className="p-3.5 rounded-xl border border-[#F9C2C2]/60 bg-white shadow-sm">
-              <div className="text-[10px] font-mono text-[#D50032] uppercase font-bold">Spherical Ribbon Pair</div>
-              <div className="text-[#18070F] text-xs font-bold mt-1">Coles 4038 Blumlein</div>
-              <div className="text-[#7A6E74] text-[11px] mt-0.5">Zero phase smearing, organic 3D depth</div>
+          <div className="grid grid-cols-2 gap-2.5 pt-1">
+            <div className="p-2.5 sm:p-3 rounded-xl border border-[#F9C2C2]/60 bg-white shadow-2xs">
+              <div className="text-[9px] sm:text-[10px] font-mono text-[#D50032] uppercase font-bold">Spherical Ribbon Pair</div>
+              <div className="text-[#18070F] text-[11px] sm:text-xs font-bold mt-0.5">Coles 4038 Blumlein</div>
+              <div className="text-[#7A6E74] text-[10px] mt-0.5 leading-tight">Zero phase smearing, organic 3D depth</div>
             </div>
-            <div className="p-3.5 rounded-xl border border-[#F9C2C2]/60 bg-white shadow-sm">
-              <div className="text-[10px] font-mono text-[#A50034] uppercase font-bold">Resonant Shell Wood</div>
-              <div className="text-[#18070F] text-xs font-bold mt-1">1968 Gretsch Round Badge</div>
-              <div className="text-[#7A6E74] text-[11px] mt-0.5">Jasper 6-ply natural cross-grain decay</div>
+            <div className="p-2.5 sm:p-3 rounded-xl border border-[#F9C2C2]/60 bg-white shadow-2xs">
+              <div className="text-[9px] sm:text-[10px] font-mono text-[#A50034] uppercase font-bold">Resonant Shell Wood</div>
+              <div className="text-[#18070F] text-[11px] sm:text-xs font-bold mt-0.5">1968 Gretsch Round Badge</div>
+              <div className="text-[#7A6E74] text-[10px] mt-0.5 leading-tight">Jasper 6-ply natural cross-grain decay</div>
             </div>
           </div>
         </div>
 
         {/* Right Column: Interactive Multitrack Stem Console */}
-        <div className="lg:col-span-7">
-          <div className="p-6 rounded-2xl border border-[#F9C2C2]/70 bg-white shadow-xl space-y-4">
-            <div className="flex justify-between items-center pb-3 border-b border-[#F9C2C2]/30">
-              <div className="flex items-center gap-2.5">
-                <Sliders className="w-4 h-4 text-[#D50032]" />
-                <span className="text-xs font-mono font-semibold tracking-wider text-[#18070F] uppercase">
+        <div className="lg:col-span-7 w-full">
+          <div className="p-3.5 sm:p-5 rounded-2xl border border-[#F9C2C2]/70 bg-white shadow-xl space-y-2.5 sm:space-y-3">
+            <div className="flex justify-between items-center pb-2 border-b border-[#F9C2C2]/30">
+              <div className="flex items-center gap-2">
+                <Sliders className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D50032]" />
+                <span className="text-[10px] sm:text-xs font-mono font-semibold tracking-wider text-[#18070F] uppercase">
                   Acoustic Stems Console // Pure Phase Linearity
                 </span>
               </div>
-              <span className="text-[10px] font-mono text-[#D50032] bg-[#FFB3BA]/30 px-2.5 py-0.5 rounded-full border border-[#D50032]/30 font-semibold">
+              <span className="text-[9px] sm:text-[10px] font-mono text-[#D50032] bg-[#FFB3BA]/30 px-2.5 py-0.5 rounded-full border border-[#D50032]/30 font-semibold">
                 96kHz / 24-bit Lossless WAV
               </span>
             </div>
 
             {/* Stem Track Faders */}
-            <div className="space-y-3">
+            <div className="space-y-2">
               {stems.map((stem) => (
                 <div
                   key={stem.id}
-                  className={`p-3 rounded-xl border transition-all ${
+                  className={`p-2 sm:p-2.5 rounded-xl border transition-all ${
                     stem.muted
                       ? 'border-[#F9C2C2]/20 bg-[#F7F5F2] opacity-40'
                       : 'border-[#F9C2C2]/50 bg-[#F7F5F2] hover:border-[#D50032]/40'
                   }`}
                 >
-                  <div className="flex justify-between items-center mb-1.5">
-                    <div>
-                      <div className="text-xs font-semibold text-[#18070F] flex items-center gap-2">
+                  <div className="flex justify-between items-center mb-1">
+                    <div className="min-w-0">
+                      <div className="text-[11px] sm:text-xs font-semibold text-[#18070F] flex items-center gap-1.5 flex-wrap">
                         <span>{stem.name}</span>
-                        <span className="text-[10px] font-mono text-[#7A6E74] font-normal">({stem.mic})</span>
+                        <span className="text-[9px] sm:text-[10px] font-mono text-[#7A6E74] font-normal">({stem.mic})</span>
                       </div>
                       <div className="text-[9px] font-mono text-[#A50034]">{stem.freq}</div>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
                       <button
                         onClick={() => toggleSolo(stem.id)}
                         className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold transition-colors cursor-pointer ${
@@ -161,7 +161,7 @@ export const SessionRecordingSection: React.FC = () => {
                       className="w-full accent-[#D50032] h-1.5 bg-white rounded-lg cursor-pointer"
                     />
                     {/* Live VU meter in crimson and blush */}
-                    <div className="w-24 h-2 bg-white rounded-full overflow-hidden flex p-0.5 gap-0.5 border border-[#F9C2C2]/60 shadow-inner">
+                    <div className="w-20 sm:w-24 h-2 bg-white rounded-full overflow-hidden flex p-0.5 gap-0.5 border border-[#F9C2C2]/60 shadow-inner flex-shrink-0">
                       <div
                         className="h-full bg-gradient-to-r from-[#A50034] via-[#D50032] to-[#FFB3BA] rounded-full transition-all duration-150"
                         style={{ width: `${stem.muted ? 0 : Math.min(100, stem.level * 0.95)}%` }}
@@ -173,7 +173,7 @@ export const SessionRecordingSection: React.FC = () => {
             </div>
 
             {/* Bottom Stem summary */}
-            <div className="pt-2 flex justify-between items-center text-[10px] font-mono text-[#7A6E74]">
+            <div className="pt-1 flex justify-between items-center text-[9px] sm:text-[10px] font-mono text-[#7A6E74]">
               <span>Tape warmth or raw 24-bit discrete tracks with Chladni phase alignment</span>
               <span className="text-[#D50032] font-bold">Worldwide Remote Turnaround</span>
             </div>
@@ -182,14 +182,14 @@ export const SessionRecordingSection: React.FC = () => {
       </div>
 
       {/* Footer Specs Row */}
-      <div className="relative z-20 flex justify-between items-center pt-4 border-t border-[#F9C2C2]/30 text-[11px] font-mono text-[#7A6E74]">
-        <div className="flex items-center gap-4">
-          <span>01 / 03 DISCIPLINES</span>
+      <div className="relative z-20 flex justify-between items-center pt-2 sm:pt-3 border-t border-[#F9C2C2]/30 text-[10px] sm:text-[11px] font-mono text-[#7A6E74] w-full max-w-7xl mx-auto">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <span>02 / 04 DISCIPLINES</span>
           <span>•</span>
           <span>SESSION & RECORDING</span>
         </div>
         <div className="hover:text-[#D50032] cursor-pointer transition-colors font-semibold">
-          GLIDE FORWARD TO 02 PERFORMANCE →
+          GLIDE FORWARD TO 03 PERFORMANCE →
         </div>
       </div>
     </div>
