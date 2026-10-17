@@ -10,10 +10,44 @@ interface LivePerformance {
   dynamics: string;
 }
 
+interface PerformanceVideo {
+  id: string;
+  title: string;
+  label: string;
+  badge: string;
+  src: string;
+  fileInfo: string;
+  tagline: string;
+}
+
 export const PerformanceSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
   const [viewMode, setViewMode] = useState<'video' | 'venues'>('video');
+  const [selectedVideoIndex, setSelectedVideoIndex] = useState<number>(0);
   const [isVideoMuted, setIsVideoMuted] = useState<boolean>(true);
+
+  const performanceVideos: PerformanceVideo[] = [
+    {
+      id: 'her-face-01b',
+      title: 'Her Face 01b',
+      label: 'HER FACE 01b',
+      badge: 'LIVE PERFORMANCE // HER FACE 01b',
+      src: '/videos/Her%20Face%2001b.mp4',
+      fileInfo: 'File: videos/Her Face 01b.mp4 • Live Visual & Dynamic Flow',
+      tagline: 'Organic Kinetic Flow'
+    },
+    {
+      id: 'hb-05-1',
+      title: 'Stage Video [hb_05_1]',
+      label: 'STAGE VIDEO [hb_05_1]',
+      badge: 'LIVE DRUMMING CAPTURE',
+      src: '/videos/hb_05_1.mp4',
+      fileInfo: 'File: videos/hb_05_1.mp4 • Natural Room Acoustics',
+      tagline: '100% Unquantized Human Pocket'
+    }
+  ];
+
+  const activeVideo = performanceVideos[selectedVideoIndex] || performanceVideos[0];
 
   const performances: LivePerformance[] = [
     {
@@ -112,12 +146,30 @@ export const PerformanceSection: React.FC = () => {
         <div className="lg:col-span-7 w-full">
           <div className="p-3.5 sm:p-5 rounded-2xl border border-[#F9C2C2]/70 bg-white shadow-xl space-y-2.5 sm:space-y-3">
             {/* View Mode Switcher */}
-            <div className="flex justify-between items-center pb-2 border-b border-[#F9C2C2]/30">
-              <div className="flex gap-2">
+            <div className="flex flex-wrap justify-between items-center gap-2 pb-2 border-b border-[#F9C2C2]/30">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 <button
-                  onClick={() => setViewMode('video')}
+                  onClick={() => {
+                    setViewMode('video');
+                    setSelectedVideoIndex(0);
+                  }}
                   className={`px-3 py-1 rounded-xl text-[11px] sm:text-xs font-mono tracking-wider flex items-center gap-1.5 cursor-pointer transition-all ${
-                    viewMode === 'video'
+                    viewMode === 'video' && selectedVideoIndex === 0
+                      ? 'bg-[#D50032] text-white font-bold shadow-md'
+                      : 'bg-[#F7F5F2] text-[#3F353A] border border-[#F9C2C2]/50 hover:bg-white'
+                  }`}
+                >
+                  <Film className="w-3.5 h-3.5" />
+                  <span>HER FACE 01b</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setViewMode('video');
+                    setSelectedVideoIndex(1);
+                  }}
+                  className={`px-3 py-1 rounded-xl text-[11px] sm:text-xs font-mono tracking-wider flex items-center gap-1.5 cursor-pointer transition-all ${
+                    viewMode === 'video' && selectedVideoIndex === 1
                       ? 'bg-[#D50032] text-white font-bold shadow-md'
                       : 'bg-[#F7F5F2] text-[#3F353A] border border-[#F9C2C2]/50 hover:bg-white'
                   }`}
@@ -159,7 +211,8 @@ export const PerformanceSection: React.FC = () => {
               <div className="space-y-2">
                 <div className="relative rounded-xl overflow-hidden border border-[#F9C2C2]/60 shadow-[0_12px_30px_rgba(165,0,52,0.08)] bg-black aspect-video max-h-[34vh] 2xl:max-h-[40vh] w-full mx-auto group">
                   <video
-                    src="/videos/hb_05_1.mp4"
+                    key={activeVideo.src}
+                    src={activeVideo.src}
                     autoPlay
                     loop
                     muted={isVideoMuted}
@@ -169,13 +222,13 @@ export const PerformanceSection: React.FC = () => {
                   />
                   <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur px-2.5 py-0.5 rounded-md border border-[#F9C2C2]/80 text-[9px] sm:text-[10px] font-mono text-[#18070F] flex items-center gap-1.5 pointer-events-none shadow-sm">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#D50032]" />
-                    <span className="font-bold text-[#A50034]">LIVE DRUMMING CAPTURE</span>
+                    <span className="font-bold text-[#A50034]">{activeVideo.badge}</span>
                   </div>
                 </div>
 
                 <div className="flex justify-between items-center text-[9px] sm:text-[10px] font-mono text-[#7A6E74] px-1">
-                  <span>File: videos/hb_05_1.mp4 • Natural Room Acoustics</span>
-                  <span className="text-[#D50032] font-semibold">100% Unquantized Human Pocket</span>
+                  <span>{activeVideo.fileInfo}</span>
+                  <span className="text-[#D50032] font-semibold">{activeVideo.tagline}</span>
                 </div>
               </div>
             ) : (
